@@ -6,10 +6,22 @@ require 'system_builder'
 require 'system_builder/box_tasks'
 
 
-SystemBuilder::BoxTasks.new(:rivendellallbox) do |box|
+SystemBuilder::BoxTasks.new(:rivendellbox) do |box|
+  box.boot do |boot|
+    boot.version = :squeeze
+  end
   box.disk_image do |image|
-    image.size = 500.megabytes
+    image.size = 1024.megabytes
   end
 end
 
-task :buildbot => "rivendellallbox:buildbot"
+task :buildbot => "rivendellbox:buildbot"
+
+namespace :rivendellbox do
+  namespace :storage do
+    desc "Create storage disk"
+    task :create do
+      sh "qemu-img create -f qcow2 dist/storage 1G"
+    end
+  end
+end

@@ -1,6 +1,6 @@
 class users { 
-  user { radio:
-    groups => [audio]
+  user { root:
+    password => ''
   }
 }
 

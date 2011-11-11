@@ -6,21 +6,22 @@ import "box"
 
 $source_base="/tmp/puppet"
 
-$box_name="streambox"
+$box_name="rivendellbox"
 include box
 
-$amixerconf_mode="capture"
+$amixerconf_mode="duplex"
 include box::audio
+
+$box_storage_name="rivendell"
+include box::storage
 
 include apache
 include apache::dnssd
-include streamcontrol
+# include rivendellcontrol
 
-$darkice_user="stream"
 include users
-include tuner
-include darkice::full
-
 include munin-node::local
 
-include icecast2
+include ftp::server
+include rivendell::server
+include rivendell::station

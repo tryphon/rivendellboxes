@@ -1,0 +1,2 @@
+RUN_MODE=init.d
+MIGRATE_COMMAND=/usr/local/sbin/rivendell-migratedb
