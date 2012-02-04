@@ -11,6 +11,13 @@ class rivendell::station {
   }
   include rivendell::mpeg
   include rivendell::station::user
+
+  include rivendell::audio
+}
+
+class rivendell::audio {
+  $amixerconf_mode="duplex"
+  include box::audio
 }
 
 class rivendell::mpeg {
@@ -61,7 +68,8 @@ class rivendell::station::user {
   define desktop_launcher() {
     exec { "install-desktop-launcher-$name":
       command => "install --mode=755 /usr/share/applications/$name.desktop /etc/skel/Desktop/",
-      creates => "/etc/skel/Desktop/$name.desktop"
+      creates => "/etc/skel/Desktop/$name.desktop",
+      require => [Package[rivendell], File["/etc/skel/Desktop"]]
     }
   }
 
@@ -71,15 +79,20 @@ class rivendell::station::user {
   file { "/var/log.model/rivendell":
     ensure => directory,
     group => rivendell,
-    mode => 775
+    mode => 775,
+    require => Package[rivendell]
   }
 }
 
 class rivendell::server {
   include apt::tryphon
-  include mysql::server
+# include rivendellcontrol
 
   include rivendell::mpeg
+  include rivendell::storage
+
+  include mysql::server
+  include ftp::server
 
   package { rivendell-server: 
     require => Apt::Source[tryphon]
@@ -123,3 +136,6 @@ class rivendell::server {
   }
 }
 
+class rivendell::storage {
+  include box::storage
+}
