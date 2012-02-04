@@ -90,6 +90,7 @@ class rivendell::server {
 
   include rivendell::mpeg
   include rivendell::storage
+  include rivendell::nfs
 
   include mysql::server
   include ftp::server
@@ -138,4 +139,15 @@ class rivendell::server {
 
 class rivendell::storage {
   include box::storage
+}
+
+class rivendell::nfs {
+  package { [nfs-kernel-server, portmap]: }
+
+  file { "/etc/exports": 
+    content => "/var/snd *(ro,async)\n"  
+  }
+
+  readonly::mount_tmpfs { "/var/lib/nfs": }
+
 }
