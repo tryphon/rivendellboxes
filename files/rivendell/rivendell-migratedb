@@ -1,7 +1,5 @@
 #!/bin/sh
 
-station=`hostname`
-
 if ! mysql mysql -NBe 'show databases' | grep -q Rivendell; then
     echo "Create Rivendell database"
 
@@ -13,18 +11,4 @@ fi
 if ! mysql Rivendell -NBe 'show tables' | grep -q CART; then
     echo "Create Rivendell tables"
     mysql Rivendell < /usr/local/share/rivendell/rivendell.sql
-
-    # Add some dropboxes to default configuration
-    
-    for group in MUSIC; do 
-        directory="/srv/ftp/rivendell/$group"
-        mysql -NBe "insert into DROPBOXES (STATION_NAME, GROUP_NAME, PATH, NORMALIZATION_LEVEL, LOG_PATH) values ('$station', '$group','$directory/*',-1300,'/var/log/rivendell/dropbox-$group.log')" Rivendell
-    done
 fi
-
-for dropbox_path in `mysql -NBe "select PATH from DROPBOXES where STATION_NAME='$station'" Rivendell`; do
-    # /home/radio/Rivendell/test/*.mp3 -> /home/radio/Rivendell/test/
-    directory=`echo $dropbox_path | cut -d"*" -f1`
-    mkdir -p $directory
-    chown radio:radio $directory
-done

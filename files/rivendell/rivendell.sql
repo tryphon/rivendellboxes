@@ -1532,16 +1532,6 @@ CREATE TABLE `RDHOTKEYS` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `RDHOTKEYS`
---
-
-LOCK TABLES `RDHOTKEYS` WRITE;
-/*!40000 ALTER TABLE `RDHOTKEYS` DISABLE KEYS */;
-INSERT INTO `RDHOTKEYS` VALUES (1,'rivendellbox','airplay',1,NULL,'Start Line 1'),(2,'rivendellbox','airplay',2,NULL,'Stop Line 1'),(3,'rivendellbox','airplay',3,NULL,'Pause Line 1'),(4,'rivendellbox','airplay',4,NULL,'Start Line 2'),(5,'rivendellbox','airplay',5,NULL,'Stop Line 2'),(6,'rivendellbox','airplay',6,NULL,'Pause Line 2'),(7,'rivendellbox','airplay',7,NULL,'Start Line 3'),(8,'rivendellbox','airplay',8,NULL,'Stop Line 3'),(9,'rivendellbox','airplay',9,NULL,'Pause Line 3'),(10,'rivendellbox','airplay',10,NULL,'Start Line 4'),(11,'rivendellbox','airplay',11,NULL,'Stop Line 4'),(12,'rivendellbox','airplay',12,NULL,'Pause Line 4'),(13,'rivendellbox','airplay',13,NULL,'Start Line 5'),(14,'rivendellbox','airplay',14,NULL,'Stop Line 5'),(15,'rivendellbox','airplay',15,NULL,'Pause Line 5'),(16,'rivendellbox','airplay',16,NULL,'Start Line 6'),(17,'rivendellbox','airplay',17,NULL,'Stop Line 6'),(18,'rivendellbox','airplay',18,NULL,'Pause Line 6'),(19,'rivendellbox','airplay',19,NULL,'Start Line 7'),(20,'rivendellbox','airplay',20,NULL,'Stop Line 7'),(21,'rivendellbox','airplay',21,NULL,'Pause Line 7'),(22,'rivendellbox','airplay',22,NULL,'Add'),(23,'rivendellbox','airplay',23,NULL,'Delete'),(24,'rivendellbox','airplay',24,NULL,'Copy'),(25,'rivendellbox','airplay',25,NULL,'Move'),(26,'rivendellbox','airplay',26,NULL,'Sound Panel'),(27,'rivendellbox','airplay',27,NULL,'Main Log'),(28,'rivendellbox','airplay',28,NULL,'Aux Log 1'),(29,'rivendellbox','airplay',29,NULL,'Aux Log 2');
-/*!40000 ALTER TABLE `RDHOTKEYS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `RDLIBRARY`
 --
 
@@ -2345,16 +2335,6 @@ CREATE TABLE `SERVICE_PERMS` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `SERVICE_PERMS`
---
-
-LOCK TABLES `SERVICE_PERMS` WRITE;
-/*!40000 ALTER TABLE `SERVICE_PERMS` DISABLE KEYS */;
-INSERT INTO `SERVICE_PERMS` VALUES (1,'rivendellbox','Production');
-/*!40000 ALTER TABLE `SERVICE_PERMS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `STATIONS`
 --
 
@@ -2427,16 +2407,6 @@ CREATE TABLE `STATIONS` (
   KEY `DESCRIPTION_IDX` (`DESCRIPTION`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `STATIONS`
---
-
-LOCK TABLES `STATIONS` WRITE;
-/*!40000 ALTER TABLE `STATIONS` DISABLE KEYS */;
-INSERT INTO `STATIONS` VALUES ('rivendellbox','Default Workstation','user','user','127.0.1.1','localhost','localhost',0,NULL,0,0,0,0,0,'',0,'N',NULL,'Y','N','N','N','N','N','N','N',NULL,NULL,NULL,0,NULL,-1,-1,0,NULL,-1,-1,0,NULL,-1,-1,0,NULL,-1,-1,0,NULL,-1,-1,0,NULL,-1,-1,0,NULL,-1,-1,0,NULL,-1,-1);
-/*!40000 ALTER TABLE `STATIONS` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `SWITCHER_NODES`

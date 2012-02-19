@@ -14,12 +14,10 @@ include munin-node::local
 include apache
 include apache::dnssd
 
-if $box_name != "rivendellairbox" {
-  $box_storage_name="rivendell"
-  include rivendell::server  
-}
+$box_storage_name="rivendell"
 
-if $box_name != "rivendellnasbox" {
-  include rivendell::station  
+case $box_name {
+  'rivendellallbox':  { include rivendell::box::all }
+  'rivendellnasbox':  { include rivendell::box::nas }
+  'rivendellairbox':  { include rivendell::box::air }
 }
-

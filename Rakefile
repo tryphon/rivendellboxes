@@ -38,7 +38,7 @@ SystemBuilder::BoxTasks.new(:rivendellairbox) do |box|
     boot.version = :squeeze
   end
   box.disk_image do |image|
-    image.size = 512.megabytes
+    image.size = 600.megabytes
   end
 end
 

@@ -1,4 +1,6 @@
+# Used in rivendellairbox AND rivendellallbox
 class rivendell::station {
+
   include apt::tryphon
   include apt::multimedia
 
@@ -13,6 +15,32 @@ class rivendell::station {
   include rivendell::station::user
 
   include rivendell::audio
+  include rivendell::common
+
+  # Used by dropboxes
+  file { "/var/log.model/rivendell":
+    ensure => directory,
+    group => rivendell,
+    mode => 775,
+    require => Package[rivendell]
+  }
+}
+
+class rivendell::common {
+  file { "/etc/rd.conf":
+    # source => ["puppet:///files/rivendell/rd.conf.${box_name}", "puppet:///files/rivendell/rd.conf"]
+    source => "puppet:///files/rivendell/rd.conf"
+  }
+
+  if defined(Package[rivendell]) {
+    File["/etc/rd.conf"] { require => Package[rivendell] }
+  } else {
+    File["/etc/rd.conf"] { require => Package[rivendell-server] }
+  }
+
+  group { rivendell: 
+    gid => 2000
+  }
 }
 
 class rivendell::audio {
@@ -27,6 +55,7 @@ class rivendell::mpeg {
 
 class rivendell::station::user {
   user { radio:
+    uid => 2000,
     groups => [audio, rivendell],
     password => '$6$2Dpz3yn7$IUNqUluNiMLZq6aYDc3cK43BiTKOamNxegwed3PVfMnMbJHDtgyCQnD0OSkBDkJdUAFlZNjb993un4ixe1xOX/',
     home => "/home/radio",
@@ -75,25 +104,26 @@ class rivendell::station::user {
 
   desktop_launcher { [rdairplay, rdadmin, rdlibrary, rdlogedit]: }
 
-  # Used by dropboxes
-  file { "/var/log.model/rivendell":
-    ensure => directory,
-    group => rivendell,
-    mode => 775,
-    require => Package[rivendell]
+  file { "/usr/local/bin/rivendell-init-radio-home": 
+    source => "puppet:///files/rivendell/rivendell-init-radio-home",
+    mode => 755
   }
+
 }
 
 class rivendell::server {
   include apt::tryphon
 # include rivendellcontrol
 
+  include rivendell::common
   include rivendell::mpeg
   include rivendell::storage
   include rivendell::nfs
 
   include mysql::server
   include ftp::server
+
+  host { rivendellnas: ip => "127.0.0.1" }
 
   package { rivendell-server: 
     require => Apt::Source[tryphon]
@@ -111,6 +141,10 @@ class rivendell::server {
     source => "puppet:///files/rivendell/rivendell.sql"
   }
 
+  file { "/usr/local/share/rivendell/999999_001.wav.bz":
+    source => "puppet:///files/rivendell/999999_001.wav.bz"
+  }
+
   file { "/var/snd":
     ensure => "/srv/rivendell/snd",
     force => true,
@@ -123,17 +157,20 @@ class rivendell::server {
     mode => 755
   }
 
-  # TODO update debian package with this script
-  file { "/etc/init.d/rivendell":
-    source => "puppet:///files/rivendell/rivendell.init"
+  file { "/usr/local/sbin/rivendell-add-station":
+    source => "puppet:///files/rivendell/rivendell-add-station",
+    mode => 755
   }
 
-  file { "/etc/rd.conf":
-    source => "puppet:///files/rivendell/rd.conf"
+  file { "/etc/init.d/rivendell-db":
+    source => "puppet:///files/rivendell/rivendell-db.init",
+    mode => 755
   }
 
-  file { "/etc/default/rivendell":
-    source => "puppet:///files/rivendell/rivendell.default"
+  exec { "update-rc.d-rivendell-db":
+    command => "insserv rivendell-db",
+    require => File["/etc/init.d/rivendell-db"],
+    unless => "ls /etc/rc?.d/S*rivendell-db > /dev/null 2>&1"
   }
 }
 
@@ -142,12 +179,62 @@ class rivendell::storage {
 }
 
 class rivendell::nfs {
+  include nfs::common
+
   package { [nfs-kernel-server, portmap]: }
 
   file { "/etc/exports": 
-    content => "/var/snd *(ro,async)\n"  
+    content => "/var/snd *(ro,async,no_subtree_check)\n/srv/rivendell/home *(rw,async,no_subtree_check)\n"  
+  }
+}
+
+class rivendell::station::nfs {
+  include nfs::common
+
+  file { "/var/snd": 
+   ensure => directory 
   }
 
-  readonly::mount_tmpfs { "/var/lib/nfs": }
+  include autofs
+  
+  package { strace: }
 
+  file { "/etc/auto.master":
+    content => "/- /etc/auto.rivendell\n",
+    require => Package[autofs]
+  }
+
+  file { "/etc/auto.rivendell":
+    source => "puppet:///files/autofs/autofs.rivendell"
+  }
+  
+  file { "/etc/default/autofs":
+    source => "puppet:///files/autofs/autofs.default",
+    require => Package[autofs]
+  }
+}
+
+class rivendell::box::nas {
+  include rivendell::server  
+}
+
+class rivendell::box::air {
+  include rivendell::station  
+  include rivendell::station::nfs
+
+  # to configure rivendellnas (when needed)
+  include dnsmasq
+
+  file { "/etc/puppet/manifests/classes/rivendell-box-air.pp":
+    source => "puppet:///files/rivendell/manifest-box-air.pp"
+  }
+}
+
+class rivendell::box::all {
+  include rivendell::server  
+  include rivendell::station
+
+  file { "/etc/puppet/manifests/classes/rivendell-box-all.pp":
+    source => "puppet:///files/rivendell/manifest-box-all.pp"
+  }
 }

@@ -1,0 +1,6 @@
+MASTER_MAP_NAME="/etc/auto.master"
+TIMEOUT=300
+BROWSE_MODE="no"
+USE_MISC_DEVICE="yes"
+
+OPTIONS="-D MAC_ADDRESS=`facter macaddress`"

@@ -46,10 +46,6 @@ if [ "$RUN_MODE" != "init.d" ]; then
     exit 0
 fi
 
-for daemon in $DAEMONS; do
-    test -x /usr/bin/$daemon || exit 0
-done
-
 function start() {
     echo -n "Starting $LABEL:"
     for daemon in $DAEMONS; do
@@ -77,6 +73,10 @@ case "$1" in
 	      echo "No database available, check that MySQL is running" >&2;
 	      exit 0;
     fi
+
+    for daemon in $DAEMONS; do
+        test -x /usr/bin/$daemon || exit 0
+    done
     
     start
     ;;

@@ -1,0 +1,42 @@
+#!/bin/sh
+
+mac_address=$1
+
+index=`echo $mac_address | sed -e 's/://g' | cut -b 9-`
+station="rivendellairbox-${index}"
+
+# TODO Manage ip address database
+ip_address=$2
+
+home_directory="/srv/rivendell/home/$mac_address"
+mkdir $home_directory
+
+echo "/usr/local/bin/rivendell-init-radio-home" > $home_directory/.xsessionrc
+
+# TODO use radio username (doesn't exist on server)
+chown -R 2000:rivendell $home_directory
+
+if ! mysql Rivendell -NBe "select true from STATIONS where NAME='$station'" | grep -q ^1; then
+    mysql Rivendell <<EOF
+INSERT INTO STATIONS (NAME, DESCRIPTION, USER_NAME, DEFAULT_NAME, IPV4_ADDRESS) VALUES ('$station','RivendellAirBox $mac_address','user','user','$ip_address');
+INSERT INTO SERVICE_PERMS (STATION_NAME, SERVICE_NAME) VALUES ('$station','Production');
+EOF
+fi
+
+# if ! mysql Rivendell -NBe 'show tables' | grep -q CART; then
+#     # Add some dropboxes to default configuration
+#     for group in MUSIC; do 
+#         directory="/srv/ftp/rivendell/$group"
+#         mysql -NBe "insert into DROPBOXES (STATION_NAME, GROUP_NAME, PATH, NORMALIZATION_LEVEL, LOG_PATH) values ('$station', '$group','$directory/*',-1300,'/var/log/rivendell/dropbox-$group.log')" Rivendell
+#     done
+# fi
+
+# for dropbox_path in `mysql -NBe "select PATH from DROPBOXES where STATION_NAME='$station'" Rivendell`; do
+#     # /home/radio/Rivendell/test/*.mp3 -> /home/radio/Rivendell/test/
+#     directory=`echo $dropbox_path | cut -d"*" -f1`
+#     mkdir -p $directory
+#     chown radio:radio $directory
+# done
+
+
+
