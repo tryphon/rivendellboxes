@@ -6,8 +6,9 @@ GIT
       capybara (~> 0.4.0)
       mechanize (~> 1.0.0)
 
-PATH
-  remote: /home/alban/Projects/SystemBuilder
+GIT
+  remote: git://projects.tryphon.eu/system-builder
+  revision: e2d30f90d764d124c6302ae53a02813d2d4ca66c
   specs:
     system-builder (0.0.25)
 
@@ -76,4 +77,4 @@ DEPENDENCIES
   cucumber
   rake
   rspec
-  system-builder (>= 0.0.24)!
+  system-builder!
