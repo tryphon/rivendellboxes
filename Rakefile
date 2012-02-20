@@ -5,15 +5,7 @@ require 'rubygems'
 require 'system_builder'
 require 'system_builder/box_tasks'
 
-
-# SystemBuilder::BoxTasks.new(:rivendellbox) do |box|
-#   box.boot do |boot|
-#     boot.version = :squeeze
-#   end
-#   box.disk_image do |image|
-#     image.size = 1024.megabytes
-#   end
-# end
+SystemBuilder::BoxTasks.multiple_boxes = true
 
 SystemBuilder::BoxTasks.new(:rivendellallbox) do |box|
   box.boot do |boot|
