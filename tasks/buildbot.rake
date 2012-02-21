@@ -1,4 +1,4 @@
-boxes = %{rivendellallbox rivendellnasbox rivendellairbox}
+boxes = %w{rivendellallbox rivendellnasbox rivendellairbox}
 
 task :buildbot do
   # clean after build
@@ -6,10 +6,6 @@ task :buildbot do
   FileUtils::sh "rake #{cleans.join(' ')}"
 end
 
-boxes.each do |box|
-  task :buildbot => ["#{box}:clean" , "#{box}:dist:all"]
-end
-
-# %{rivendellallbox rivendellnasbox rivendellairbox}.each do |box|
-#   task :buildbot => "#{box}:buildbot:dist"
-# end
+boxes.each { |box| task :buildbot => "#{box}:clean" }
+boxes.each { |box| task :buildbot => "#{box}:dist:all" }
+boxes.each { |box| task :buildbot => "#{box}:buildbot:dist" }
