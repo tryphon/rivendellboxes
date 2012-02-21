@@ -34,8 +34,6 @@ SystemBuilder::BoxTasks.new(:rivendellairbox) do |box|
   end
 end
 
-task :buildbot => "rivendellbox:buildbot"
-
 namespace :rivendellallbox do
   namespace :storage do
     desc "Create storage disk"
