@@ -1,7 +1,7 @@
 source :gemcutter
 
 gem "rake"
-gem "system-builder", :git => "git://projects.tryphon.eu/system-builder"
+gem "system-builder", :git => "git://projects.tryphon.eu/system-builder" #, :path => "~/Projects/SystemBuilder"
 
 group :cucumber do
   gem 'capybara'
