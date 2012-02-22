@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.eu/system-builder
-  revision: b14b182aa9ca5b62165eff472a69d0dcdb8b2067
+  revision: 1e6fe5a31563795f1523cbac6a68f07d2a6b3551
   specs:
     system-builder (0.0.25)
 
