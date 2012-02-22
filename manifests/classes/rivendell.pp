@@ -169,7 +169,7 @@ class rivendell::server {
 
   exec { "update-rc.d-rivendell-db":
     command => "insserv rivendell-db",
-    require => File["/etc/init.d/rivendell-db"],
+    require => [File["/etc/init.d/rivendell-db"], Package[mysql-server]],
     unless => "ls /etc/rc?.d/S*rivendell-db > /dev/null 2>&1"
   }
 }
