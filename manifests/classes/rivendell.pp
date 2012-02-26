@@ -28,8 +28,7 @@ class rivendell::station {
 
 class rivendell::common {
   file { "/etc/rd.conf":
-    # source => ["puppet:///files/rivendell/rd.conf.${box_name}", "puppet:///files/rivendell/rd.conf"]
-    source => "puppet:///files/rivendell/rd.conf"
+    source => ["puppet:///files/rivendell/rd.conf.${box_name}", "puppet:///files/rivendell/rd.conf"]
   }
 
   if defined(Package[rivendell]) {
@@ -123,8 +122,6 @@ class rivendell::server {
   include mysql::server
   include ftp::server
 
-  host { rivendellnas: ip => "127.0.0.1" }
-
   package { rivendell-server: 
     require => Apt::Source[tryphon]
   }
@@ -184,7 +181,7 @@ class rivendell::nfs {
   package { [nfs-kernel-server, portmap]: }
 
   file { "/etc/exports": 
-    content => "/var/snd *(ro,async,no_subtree_check)\n/srv/rivendell/home *(rw,async,no_subtree_check)\n"  
+    content => "/var/snd *(ro,async,no_subtree_check)\n/srv/rivendell/home *(rw,async,no_subtree_check)\n/srv/rivendell/boot *(ro,async,no_subtree_check)\n"  
   }
 }
 
@@ -216,6 +213,8 @@ class rivendell::station::nfs {
 
 class rivendell::box::nas {
   include rivendell::server  
+  include dnsmasq
+  include dnsmasq::dhcp
 }
 
 class rivendell::box::air {
@@ -224,6 +223,9 @@ class rivendell::box::air {
 
   # to configure rivendellnas (when needed)
   include dnsmasq
+
+  # change hostname according to dhcp
+  include network::dhclient::hostname
 
   file { "/etc/puppet/manifests/classes/rivendell-box-air.pp":
     source => "puppet:///files/rivendell/manifest-box-air.pp"

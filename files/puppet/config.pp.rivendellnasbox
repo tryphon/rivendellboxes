@@ -1,0 +1,9 @@
+$network_method="static"
+$network_static_address="172.30.0.1"
+$network_static_netmask="255.255.255.0"
+$network_static_gateway=""
+$network_static_dns1=""
+
+$dhcp_enabled="true"
+$dhcp_range_begin="172.30.0.100"
+$dhcp_range_end="172.30.0.200"

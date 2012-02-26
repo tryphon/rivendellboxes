@@ -1,0 +1,23 @@
+auto lo
+iface lo inet loopback
+
+<% if network_method == 'static' %>
+iface eth0 inet static
+  address <%= network_static_address %>
+  netmask <%= network_static_netmask %>
+  <% if has_variable?("network_static_gateway") and not network_static_gateway.empty? %>gateway <%= network_static_gateway %><% end %>
+  <% if has_variable?("network_static_dns1") and not network_static_dns1.empty? %>dns-nameservers <%= network_static_dns1 %><% end %>
+<% else %>
+iface eth0 inet dhcp
+<% end %>
+
+auto eth0
+
+<% if network_interfaces.include?("eth1") %>
+auto eth1
+iface eth1 inet dhcp
+<% else %>
+auto vlan100
+iface vlan100 inet dhcp
+  vlan_raw_device eth0
+<% end %>

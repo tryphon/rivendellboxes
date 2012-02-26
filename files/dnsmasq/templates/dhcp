@@ -1,0 +1,15 @@
+<% if has_variable?("dhcp_hosts") %>
+<% dhcp_hosts.each do |host| -%>
+dhcp-host=<%= host['hwaddr'].upcase %>,<%= host['ipaddr'] %>,<%= host['hostname'] %>
+<% end -%>
+<% end %>
+
+<% if has_variable?("dhcp_range_end") and not dhcp_range_end.empty? %>
+dhcp-range=<%= dhcp_range_begin %>,<%= dhcp_range_end %>
+<% else %>
+dhcp-range=<%= dhcp_range_begin %>,static
+<% end %>
+
+dhcp-boot=pxelinux.0
+enable-tftp
+tftp-root=/srv/rivendell/boot
