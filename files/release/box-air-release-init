@@ -1,0 +1,42 @@
+#!/bin/sh -e
+
+TEMP=/var/tmp
+
+lock_file="/var/run/box-air-release.lock"
+if [ -f "$lock_file" ]; then
+    logger -t box-air-release -i "lock file found ($lock_file)"
+    exit 1
+fi
+
+touch $lock_file
+trap "rm -f $lock_file" EXIT
+
+cd /srv/rivendell/boot
+
+[ -f /etc/box/release.conf ] && . /etc/box/release.conf
+
+release_name=`sed -n -e 's/nas/air/' -e '/name/ s/name: //p' /boot/current.yml`
+
+if [ -f "initrd-${release_name}.img" ]; then
+    exit 0
+fi
+
+release_url="$release_server/rivendellairbox/$release_name.tar"
+logger -i -t box-air-release "Download $release_url"
+
+wget -q -c -P $TEMP $release_url
+
+logger -i -t box-air-release "Install $release_name in $PWD"
+tar_file="$TEMP/$release_name.tar"
+
+tar -xf $tar_file
+
+ln -fs filesystem-${release_name}.squashfs filesystem.squashfs
+ln -fs vmlinuz-${release_name} vmlinuz
+ln -fs initrd-${release_name}.img initrd.img
+
+echo "name: $release_name" > current.yml
+
+logger -i -t box-air-release "$release_name is now current rivendellairbox release"
+
+rm $tar_file

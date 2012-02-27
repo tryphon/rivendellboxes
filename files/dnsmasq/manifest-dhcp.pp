@@ -26,3 +26,12 @@ file { "/srv/rivendell/boot/pxelinux.cfg/default":
   content => template("dnsmasq/pxelinux.cfg"),
   tag => boot
 }
+
+file { "/srv/rivendell/boot/pxelinux.0":
+  ensure => "/usr/lib/syslinux/pxelinux.0"
+}
+
+file { "/srv/rivendell/boot/config.pp":
+  source => "/etc/puppet/files/puppet/config.pp.rivendellairbox",
+  tag => boot
+}

@@ -215,6 +215,7 @@ class rivendell::box::nas {
   include rivendell::server  
   include dnsmasq
   include dnsmasq::dhcp
+  include release::airbox
 }
 
 class rivendell::box::air {

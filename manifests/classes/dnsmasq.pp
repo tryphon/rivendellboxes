@@ -32,4 +32,12 @@ class dnsmasq::dhcp {
     source => "puppet:///files/dnsmasq/update-rivendellnas-address",
     mode => 755
   }
+
+  file { "/etc/puppet/files/puppet":
+    ensure => directory
+  }
+
+  file { "/etc/puppet/files/puppet/config.pp.rivendellairbox":
+    source => "puppet:///files/puppet/config.pp.rivendellairbox"
+  }
 }
