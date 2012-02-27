@@ -1,6 +1,7 @@
 file { "/srv/rivendell/home":
   ensure => directory,
-  tag => boot
+  tag => boot,
+  require => Exec["storage-mount-rivendell"]
 }
 
 file { "/srv/rivendell/snd":
@@ -27,3 +28,18 @@ file { "/srv/ftp/rivendell":
   tag => boot,
   require => Exec["storage-mount-rivendell"]
 }
+
+file { "/srv/rivendell/tmp":
+  ensure => directory,
+  mode => 1777,
+  tag => boot,
+  require => Exec["storage-mount-rivendell"]
+}
+
+exec { "mount-var-tmp":
+  command => "mount -o bind /srv/rivendell/tmp /var/tmp",
+  unless => "mount | grep -q 'on /var/tmp type ext'",
+  require => File["/srv/rivendell/tmp"],
+  tag => boot
+}
+
