@@ -16,8 +16,10 @@ auto eth0
 <% if network_interfaces.include?("eth1") %>
 auto eth1
 iface eth1 inet dhcp
+  up iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE 
 <% else %>
 auto vlan100
 iface vlan100 inet dhcp
   vlan_raw_device eth0
+  up iptables -t nat -A POSTROUTING -o vlan -j MASQUERADE 
 <% end %>
