@@ -3,10 +3,11 @@
 mac_address=$1
 
 index=`echo $mac_address | sed -e 's/://g' | cut -b 9-`
-station="rivendellairbox-${index}"
 
 # TODO Manage ip address database
 ip_address=$2
+
+station=$3
 
 home_directory="/srv/rivendell/home/$mac_address"
 mkdir $home_directory
