@@ -47,7 +47,14 @@ namespace :rivendellnasbox do
   namespace :storage do
     desc "Create storage disk"
     task :create do
-      sh "qemu-img create -f qcow2 dist/rivendellnasbox/storage 1G"
+      if ENV['COUNT'] == "2"
+        2.times do |n|
+          file = "dist/rivendellnasbox/storage#{n+1}"
+          sh "qemu-img create -f raw #{file} 3G" unless File.exists?(file)
+        end
+      else
+        sh "qemu-img create -f qcow2 dist/rivendellnasbox/storage 3G"
+      end
     end
   end
 end
