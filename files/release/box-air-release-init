@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-TEMP=/var/tmp
+TMPDIR=/tmp
 
 lock_file="/var/run/box-air-release.lock"
 if [ -f "$lock_file" ]; then
@@ -24,10 +24,10 @@ fi
 release_url="$release_server/rivendellairbox/$release_name.tar"
 logger -i -t box-air-release "Download $release_url"
 
-wget -q -c -P $TEMP $release_url
+wget -q -c -P $TMPDIR $release_url
 
 logger -i -t box-air-release "Install $release_name in $PWD"
-tar_file="$TEMP/$release_name.tar"
+tar_file="$TMPDIR/$release_name.tar"
 
 tar -xf $tar_file
 

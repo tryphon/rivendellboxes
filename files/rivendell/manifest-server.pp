@@ -36,9 +36,10 @@ file { "/srv/rivendell/tmp":
   require => Exec["storage-mount-rivendell"]
 }
 
-exec { "mount-var-tmp":
-  command => "mount -o bind /srv/rivendell/tmp /var/tmp",
-  unless => "mount | grep -q 'on /var/tmp type ext'",
+# FIXME 
+exec { "bind-tmp":
+  command => "mount -o bind /srv/rivendell/tmp /tmp",
+  unless => "mount | grep -q 'on /tmp type ext'",
   require => File["/srv/rivendell/tmp"],
   tag => boot
 }
