@@ -17,7 +17,9 @@ class locales {
   }
 
   file { "/etc/default/locale":
-    ensure => "/var/etc/default/locale"
+    ensure => "/var/etc/default/locale",
+    force => true,
+    require => Package[locales]
   }
   file { "/etc/default/keyboard":
     ensure => "/var/etc/default/keyboard"
