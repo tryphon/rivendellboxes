@@ -9,8 +9,19 @@ class rivendell::station {
   include gnome::vnc
 
   package { rivendell: 
-    require => Apt::Source[tryphon]
+    require => Apt::Source[tryphon],
+    ensure => latest
   }
+  
+  file { "/usr/share/rivendell/rdairplay_fr.qm":
+    source => "puppet:///files/rivendell/fr/rdairplay_fr.qm",
+    require => Package[rivendell]
+  }
+  file { "/usr/share/rivendell/librd_fr.qm":
+    source => "puppet:///files/rivendell/fr/librd_fr.qm",
+    require => Package[rivendell]
+  }
+
   include rivendell::mpeg
   include rivendell::station::user
 
@@ -53,6 +64,8 @@ class rivendell::mpeg {
 }
 
 class rivendell::station::user {
+  include locales
+
   user { radio:
     uid => 2000,
     groups => [audio, rivendell],
@@ -123,7 +136,8 @@ class rivendell::server {
   include ftp::server
 
   package { rivendell-server: 
-    require => Apt::Source[tryphon]
+    require => Apt::Source[tryphon],
+    ensure => latest
   }
 
   file { "/etc/puppet/manifests/classes/rivendell-server.pp":
