@@ -2,8 +2,6 @@
 
 mac_address=$1
 
-index=`echo $mac_address | sed -e 's/://g' | cut -b 9-`
-
 # TODO Manage ip address database
 ip_address=$2
 
