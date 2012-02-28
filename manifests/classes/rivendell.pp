@@ -232,6 +232,7 @@ class rivendell::box::nas {
   include release::airbox
   include network::vlan
   include network::iptables
+  include rsyslog::server
 }
 
 class rivendell::box::air {
