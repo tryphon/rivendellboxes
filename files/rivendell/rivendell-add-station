@@ -13,7 +13,7 @@ mkdir $home_directory
 echo "/usr/local/bin/rivendell-init-radio-home" > $home_directory/.xsessionrc
 
 # TODO use radio username (doesn't exist on server)
-chown -R 2000:rivendell $home_directory
+chown -R radio:rivendell $home_directory
 
 if ! mysql Rivendell -NBe "select true from STATIONS where NAME='$station'" | grep -q ^1; then
     mysql Rivendell <<EOF

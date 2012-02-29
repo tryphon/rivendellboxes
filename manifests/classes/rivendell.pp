@@ -103,7 +103,7 @@ class rivendell::station::user {
     ensure => directory
   }
   file { "/etc/skel/Desktop/DropBoxes":
-    ensure => "/srv/ftp/rivendell"
+    ensure => "/nfs/dropboxes"
   }
 
   define desktop_launcher() {
@@ -140,6 +140,14 @@ class rivendell::server {
     ensure => latest
   }
 
+  if ! defined(User[radio]) {
+    user { radio:
+      uid => 2000,
+      groups => rivendell,
+      shell => "/bin/false"
+    }
+  }
+
   file { "/etc/puppet/manifests/classes/rivendell-server.pp":
     source => "puppet:///files/rivendell/manifest-server.pp"
   }
@@ -153,7 +161,10 @@ class rivendell::server {
   }
 
   file { "/usr/local/share/rivendell/999999_001.wav.bz":
-    source => "puppet:///files/rivendell/999999_001.wav.bz"
+    source => "puppet:///files/rivendell/999999_001.wav.bz",
+    owner => radio,
+    group => rivendell,
+    require => User[radio]
   }
 
   file { "/var/snd":
@@ -195,7 +206,7 @@ class rivendell::nfs {
   package { [nfs-kernel-server, portmap]: }
 
   file { "/etc/exports": 
-    content => "/var/snd *(ro,async,no_subtree_check)\n/srv/rivendell/home *(rw,async,no_subtree_check)\n/srv/rivendell/boot *(ro,async,no_subtree_check)\n"  
+    source => "puppet:///files/nfs/exports"
   }
 }
 
@@ -223,6 +234,11 @@ class rivendell::station::nfs {
     source => "puppet:///files/autofs/autofs.default",
     require => Package[autofs]
   }
+
+  file { ["/nfs", "/nfs/dropboxes"]:
+    ensure => directory
+  }
+
 }
 
 class rivendell::box::nas {

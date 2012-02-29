@@ -21,12 +21,24 @@ exec { "rivendell-default-cut":
   require => File["/srv/rivendell/snd"]
 }
 
-file { "/srv/ftp/rivendell": 
+file { "/srv/rivendell/ftp": 
   ensure => directory,
-  group => rivendell,
-  mode => 775,
   tag => boot,
   require => Exec["storage-mount-rivendell"]
+}
+
+file { "/srv/rivendell/ftp/dropboxes": 
+  ensure => directory,
+  group => rivendell,
+  mode => 2775,
+  tag => boot
+}
+
+file { "/srv/rivendell/ftp/upload": 
+  ensure => directory,
+  group => rivendell,
+  mode => 2775,
+  tag => boot
 }
 
 file { "/srv/rivendell/tmp":

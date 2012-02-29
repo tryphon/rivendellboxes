@@ -1,0 +1,4 @@
+/var/snd *(ro,async,no_subtree_check)
+/srv/rivendell/home *(rw,async,no_subtree_check)
+/srv/rivendell/boot *(ro,async,no_subtree_check)
+/srv/rivendell/ftp *(rw,async,no_subtree_check)
