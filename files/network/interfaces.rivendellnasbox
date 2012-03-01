@@ -21,5 +21,5 @@ iface eth1 inet dhcp
 auto vlan100
 iface vlan100 inet dhcp
   vlan_raw_device eth0
-  up iptables -t nat -A POSTROUTING -o vlan -j MASQUERADE 
+  up iptables -t nat -A POSTROUTING -o vlan100 -j MASQUERADE 
 <% end %>
