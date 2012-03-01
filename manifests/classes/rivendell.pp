@@ -248,6 +248,7 @@ class rivendell::box::nas {
   include release::airbox
   include network::vlan
   include network::iptables
+  include network::gateway
   include rsyslog::server
 }
 
