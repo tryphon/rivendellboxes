@@ -8,4 +8,7 @@ end
 
 boxes.each { |box| task :buildbot => "#{box}:clean" }
 boxes.each { |box| task :buildbot => "#{box}:dist:all" }
+task :buildbot => "rivendellboxes:dist:upgrade"
 boxes.each { |box| task :buildbot => "#{box}:buildbot:dist" }
+task :buildbot => "rivendellboxes:buildbot:dist"
+
