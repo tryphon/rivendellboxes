@@ -21,7 +21,11 @@ class locales {
     force => true,
     require => Package[locales]
   }
+
+  package { "keyboard-configuration": }
+
   file { "/etc/default/keyboard":
-    ensure => "/var/etc/default/keyboard"
+    ensure => "/var/etc/default/keyboard",
+    require => Package["keyboard-configuration"]
   }
 }
