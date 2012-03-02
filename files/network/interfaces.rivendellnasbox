@@ -15,11 +15,30 @@ auto eth0
 
 <% if network_interfaces.include?("eth1") %>
 auto eth1
-iface eth1 inet dhcp
+<% if has_variable?("network_iface1_method") and network_iface1_method == 'static' %>
+iface eth1 inet static
+  address <%= network_iface1_static_address %>
+  netmask <%= network_iface1_static_netmask %>
+  <% if has_variable?("network_iface1_static_gateway") and not network_iface1_static_gateway.empty? %>gateway <%= network_iface1_static_gateway %><% end %>
+  <% if has_variable?("network_iface1_static_dns1") and not network_iface1_static_dns1.empty? %>dns-nameservers <%= network_iface1_static_dns1 %><% end %>
   up iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE 
 <% else %>
+iface eth1 inet dhcp
+  up iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE 
+<% end %>
+<% else %>
 auto vlan100
+<% if has_variable?("network_iface1_method") and network_iface1_method == 'static' %>
+iface vlan100 inet static
+  vlan_raw_device eth0
+  address <%= network_iface1_static_address %>
+  netmask <%= network_iface1_static_netmask %>
+  <% if has_variable?("network_iface1_static_gateway") and not network_iface1_static_gateway.empty? %>gateway <%= network_iface1_static_gateway %><% end %>
+  <% if has_variable?("network_iface1_static_dns1") and not network_iface1_static_dns1.empty? %>dns-nameservers <%= network_iface1_static_dns1 %><% end %>
+  up iptables -t nat -A POSTROUTING -o vlan100 -j MASQUERADE 
+<% else %>
 iface vlan100 inet dhcp
   vlan_raw_device eth0
   up iptables -t nat -A POSTROUTING -o vlan100 -j MASQUERADE 
 <% end %>
+<% end%>
