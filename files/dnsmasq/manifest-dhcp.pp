@@ -33,5 +33,6 @@ file { "/srv/rivendell/boot/pxelinux.0":
 
 file { "/srv/rivendell/boot/config.pp":
   source => "/etc/puppet/files/puppet/config.pp.rivendellairbox",
+  replace => false,
   tag => boot
 }
