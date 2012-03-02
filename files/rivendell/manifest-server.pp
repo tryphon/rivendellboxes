@@ -21,6 +21,12 @@ exec { "rivendell-default-cut":
   require => File["/srv/rivendell/snd"]
 }
 
+file { "/srv/rivendell/backup": 
+  ensure => directory,
+  tag => boot,
+  require => Exec["storage-mount-rivendell"]
+}
+
 file { "/srv/rivendell/ftp": 
   ensure => directory,
   tag => boot,

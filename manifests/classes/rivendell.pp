@@ -194,6 +194,16 @@ class rivendell::server {
     require => [File["/etc/init.d/rivendell-db"], Package[mysql-server]],
     unless => "ls /etc/rc?.d/S*rivendell-db > /dev/null 2>&1"
   }
+
+  file { "/usr/local/sbin/rivendell-backup-db":
+    source => "puppet:///files/rivendell/rivendell-backup-db",
+    mode => 755
+  }
+
+  file { "/etc/cron.daily/rivendell-backup-db":
+    ensure => "/usr/local/sbin/rivendell-backup-db",
+    require => Package[cron]
+  }
 }
 
 class rivendell::storage {
