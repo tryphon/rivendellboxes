@@ -1,0 +1,45 @@
+#!/bin/sh -e
+
+# Manage joined RivendellNasBox/AirBox tar upgrade
+#
+# Tar file should contain :
+#
+# rivendellairbox/upgrade.tar
+# rivendellairbox/latest.yml
+# rivendellnasbox/upgrade.tar
+# rivendellnasbox/latest.yml
+
+
+tar_file=$1
+current_file=$2
+release_name=`sed -n '/name/ s/name: //p' $current_file`
+
+temp_dir=`mktemp -d "/srv/rivendell/tmp/boxes-upgrade-$release_name-XXXXXX"`
+
+tar -xf $tar_file -C $temp_dir
+
+if [ -d "$temp_dir/rivendellairbox" ]; then
+    tar -xf $temp_dir/rivendellairbox/upgrade.tar -C /srv/rivendell/boot
+
+    air_release_name=`echo $release_name | sed 's/rivendellboxes/rivendellairbox/'`
+    cp $temp_dir/rivendellairbox/latest.yml /srv/rivendell/boot/current-${air_release_name}.yml
+
+    cd /srv/rivendell/boot
+
+    ln -fs filesystem-${air_release_name}.squashfs filesystem.squashfs
+    ln -fs vmlinuz-${air_release_name} vmlinuz
+    ln -fs initrd-${air_release_name}.img initrd.img
+
+    ln -fs current-${air_release_name}.yml current.yml
+
+    keep_releases=5
+    ls -r filesystem-*.squashfs | tail -n +$keep_releases | xargs -r rm
+    ls -r vmlinuz-* | tail -n +$keep_releases | xargs -r rm
+    ls -r initrd-*.img | tail -n +$keep_releases | xargs -r rm
+    ls -r current-*.yml | tail -n +$keep_releases | xargs -r rm
+fi
+
+if [ -d "$temp_dir/rivendellnasbox" ]; then
+    /usr/local/sbin/box-upgrade $temp_dir/rivendellnasbox/upgrade.tar $temp_dir/rivendellnasbox/latest.yml
+fi
+

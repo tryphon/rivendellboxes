@@ -10,3 +10,12 @@ class release::airbox {
     require => Package[cron]
   }
 }
+
+class release::boxes {
+
+  file { "/usr/local/sbin/boxes-upgrade":
+    source => "puppet:///files/release/boxes-upgrade",
+    mode => 755
+  }
+
+}
