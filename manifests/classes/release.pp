@@ -6,6 +6,7 @@ class release::airbox {
     mode => 755
   }
   file { "/etc/cron.d/box-air-release-init":
-    source => "puppet:///files/release/box-air-release-init.cron"
+    source => "puppet:///files/release/box-air-release-init.cron",
+    require => Package[cron]
   }
 }
