@@ -53,7 +53,7 @@ namespace :rivendellnasbox do
           sh "qemu-img create -f raw #{file} 3G" unless File.exists?(file)
         end
       else
-        sh "qemu-img create -f qcow2 dist/rivendellnasbox/storage 3G"
+        sh "qemu-img create -f raw dist/rivendellnasbox/storage 3G"
       end
     end
   end
@@ -82,4 +82,10 @@ namespace :rivendellboxes do
       cp "dist/rivendellboxes/latest.yml", "#{target_directory}/latest.yml"
     end
   end
+
+  desc "Tag and publish latest buildbot RivendellAir&NasBoxes release"
+  task :release do
+    SystemBuilder::Publisher.new("rivendellboxes").publish
+  end
+
 end
