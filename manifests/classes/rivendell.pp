@@ -265,7 +265,8 @@ class rivendell::box::nas {
   # FIXME
   file { "/etc/cron.hourly/ping-for-remote-ip":
     content => "#!/bin/sh\nwget -q -O /dev/null \"http://download.tryphon.eu/rivendellboxes/latest.yml?macaddress=`facter macaddress`\"\n",
-    mode => 755
+    mode => 755,
+    require => Package[cron]
   }
 }
 
