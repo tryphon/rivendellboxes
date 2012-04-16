@@ -12,3 +12,7 @@ class ftp::server {
     require => Package[proftpd]
   }
 }
+
+class ftp::client {
+  package { lftp: }
+}

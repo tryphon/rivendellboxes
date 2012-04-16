@@ -14,6 +14,8 @@ include munin-node::local
 include apache
 include apache::dnssd
 
+include ftp::client
+
 $box_storage_name="rivendell"
 
 case $box_name {
