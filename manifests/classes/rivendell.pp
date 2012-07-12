@@ -260,7 +260,7 @@ class rivendell::station::nfs {
     require => Package[autofs]
   }
 
-  file { ["/nfs", "/nfs/dropboxes"]:
+  file { ["/nfs", "/nfs/dropboxes", "/nfs/tmp"]:
     ensure => directory
   }
 
