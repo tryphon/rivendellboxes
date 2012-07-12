@@ -81,7 +81,7 @@ class rivendell::station::user {
 
   user { radio:
     uid => 2000,
-    groups => [audio, rivendell],
+    groups => [audio, rivendell, adm],
     password => '$6$2Dpz3yn7$IUNqUluNiMLZq6aYDc3cK43BiTKOamNxegwed3PVfMnMbJHDtgyCQnD0OSkBDkJdUAFlZNjb993un4ixe1xOX/',
     home => "/home/radio",
     require => Package[rivendell],
