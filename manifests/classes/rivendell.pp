@@ -64,6 +64,7 @@ class rivendell::common {
     require => Apt::Source[tryphon],
     ensure => $rivendell::release
   }
+  package { libhpi: ensure => "4.08.07-1" }
 }
 
 class rivendell::audio {
