@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# REMOVEME Migration for ticket #8
+if ! grep VISUAL ~/.xsessionrc; then
+  echo "export VISUAL=gedit" >> ~/.xsessionrc
+fi
+
 if [ ! -f ~/.homesync ]; then
   rsync -a /etc/skel/ ~/ && touch ~/.homesync
 fi
