@@ -17,6 +17,11 @@ class rivendell::station {
     require => Apt::Source[tryphon],
     ensure => $rivendell::release
   }
+  package { libhpi: 
+    require => Apt::Source[tryphon],
+    ensure => "4.08.07-1" 
+  }
+
   include rivendell::common
   
   file { "/usr/share/rivendell/rdairplay_fr.qm":
@@ -64,7 +69,7 @@ class rivendell::common {
     require => Apt::Source[tryphon],
     ensure => $rivendell::release
   }
-  package { libhpi: ensure => "4.08.07-1" }
+
 }
 
 class rivendell::audio {
