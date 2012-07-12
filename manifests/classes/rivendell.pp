@@ -1,5 +1,10 @@
+class rivendell {
+  $release = "2.1.4-2"
+}
+
 # Used in rivendellairbox AND rivendellallbox
 class rivendell::station {
+  include rivendell
 
   include apt::tryphon
   include apt::multimedia
@@ -10,8 +15,9 @@ class rivendell::station {
 
   package { rivendell: 
     require => Apt::Source[tryphon],
-    ensure => latest
+    ensure => $rivendell::release
   }
+  include rivendell::common
   
   file { "/usr/share/rivendell/rdairplay_fr.qm":
     source => "puppet:///files/rivendell/fr/rdairplay_fr.qm",
@@ -26,7 +32,6 @@ class rivendell::station {
   include rivendell::station::user
 
   include rivendell::audio
-  include rivendell::common
 
   # Used by dropboxes
   file { "/var/log.model/rivendell":
@@ -38,6 +43,8 @@ class rivendell::station {
 }
 
 class rivendell::common {
+  include rivendell
+
   file { "/etc/rd.conf":
     source => ["puppet:///files/rivendell/rd.conf.${box_name}", "puppet:///files/rivendell/rd.conf"]
   }
@@ -50,6 +57,12 @@ class rivendell::common {
 
   group { rivendell: 
     gid => 2000
+  }
+
+  # FIXME librivendell dependency doesn't include release (rivendell2-debian #6)
+  package { librivendell: 
+    require => Apt::Source[tryphon],
+    ensure => $rivendell::release
   }
 }
 
@@ -126,8 +139,8 @@ class rivendell::station::user {
 class rivendell::server {
   include apt::tryphon
 # include rivendellcontrol
+  include rivendell
 
-  include rivendell::common
   include rivendell::mpeg
   include rivendell::storage
   include rivendell::nfs
@@ -137,8 +150,9 @@ class rivendell::server {
 
   package { rivendell-server: 
     require => Apt::Source[tryphon],
-    ensure => latest
+    ensure => $rivendell::release
   }
+  include rivendell::common
 
   if ! defined(User[radio]) {
     user { radio:
