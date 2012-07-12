@@ -1,3 +1,4 @@
 /var/snd -fstype=nfs rivendellnas:/var/snd
 /home/radio -fstype=nfs rivendellnas:/srv/rivendell/home/$MAC_ADDRESS
 /nfs/dropboxes -fstype=nfs rivendellnas:/srv/rivendell/ftp/dropboxes
+/nfs/tmp -fstype=nfs rivendellnas:/srv/rivendell/tmp
