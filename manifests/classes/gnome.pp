@@ -39,6 +39,11 @@ class gnome::polkit {
     require => Package[consolekit]
   }
 
+  file { "/usr/share/polkit-1/actions/org.freedesktop.udisks.policy":
+    source => "puppet:///files/polkit/org.freedesktop.udisks.policy",
+    require => Package[consolekit]
+  }
+
   # file { "/etc/polkit-1/localauthority/50-local.d/reboot.pkla":
   #   source => "puppet:///files/polkit/reboot.pkla",
   #   require => Package[policykit-1-gnome]
