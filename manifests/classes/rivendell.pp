@@ -271,7 +271,7 @@ class rivendell::station::nfs {
 
   # rdcatchd daemon need place to create cut or export files (#9)
   file { "/etc/default/rivendell":
-    content => "export TEMP=/nfs/tmp\nRUN_MODE=init.d\n",
+    content => "export TEMP=/nfs/tmp TMPDIR=/nfs/tmp\nRUN_MODE=init.d\n",
     require => Package[rivendell]
   }
 }
