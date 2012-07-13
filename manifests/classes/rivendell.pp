@@ -23,6 +23,7 @@ class rivendell::station {
   }
 
   include rivendell::common
+  include mount
   
   file { "/usr/share/rivendell/rdairplay_fr.qm":
     source => "puppet:///files/rivendell/fr/rdairplay_fr.qm",
