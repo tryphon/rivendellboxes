@@ -1,4 +1,4 @@
 class mount {
   readonly::mount_tmpfs { "/media": }
-  package { eject: }
+  package { eject: ensure => present }
 }
