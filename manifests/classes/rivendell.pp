@@ -83,16 +83,14 @@ class rivendell::mpeg {
   package { [libmp3lame0, libtwolame0, libmad0]: }
 }
 
-class rivendell::station::user {
+class rivendell::station::user inherits rivendell::user {
   include locales
 
-  user { radio:
-    uid => 2000,
-    groups => [audio, rivendell, adm],
+  User[radio] {
+    groups +> [audio, adm],
     password => '$6$2Dpz3yn7$IUNqUluNiMLZq6aYDc3cK43BiTKOamNxegwed3PVfMnMbJHDtgyCQnD0OSkBDkJdUAFlZNjb993un4ixe1xOX/',
     home => "/home/radio",
     require => Package[rivendell],
-    shell => "/bin/bash"
   }
 
   file { "/home/radio":
@@ -143,6 +141,14 @@ class rivendell::station::user {
 
 }
 
+class rivendell::user {
+  user { radio:
+    uid => 2000,
+    groups => rivendell,
+    shell => "/bin/bash"
+  }
+}
+
 class rivendell::server {
   include apt::tryphon
 # include rivendellcontrol
@@ -161,13 +167,7 @@ class rivendell::server {
   }
   include rivendell::common
 
-  if ! defined(User[radio]) {
-    user { radio:
-      uid => 2000,
-      groups => rivendell,
-      shell => "/bin/false"
-    }
-  }
+  include rivendell::user
 
   file { "/etc/puppet/manifests/classes/rivendell-server.pp":
     source => "puppet:///files/rivendell/manifest-server.pp"
@@ -314,6 +314,8 @@ class rivendell::box::air {
 class rivendell::box::all {
   include rivendell::server  
   include rivendell::station
+
+  include dnsmasq
 
   file { "/etc/puppet/manifests/classes/rivendell-box-all.pp":
     source => "puppet:///files/rivendell/manifest-box-all.pp"

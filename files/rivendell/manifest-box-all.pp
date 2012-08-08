@@ -11,3 +11,10 @@ exec { "mount-home":
   tag => boot,
   before => Exec["rivendell-radio-home"]
 }
+
+exec { "rivendell-radio-home":
+  command => "rsync -a /etc/skel/ /home/radio/",
+  creates => "/home/radio/skel/.profile",
+  tag => boot,
+  user => radio
+}

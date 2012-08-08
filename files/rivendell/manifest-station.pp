@@ -1,8 +1,7 @@
-# TODO NFS isn't ready at boot
-# exec { "rivendell-radio-home":
-#   command => "rsync -a /etc/skel/ /home/radio/",
-#   creates => "/home/radio/skel/.profile",
-#   tag => boot,
-#   user => radio
-# }
-
+dnsmasq::conf { rivendell_nas:
+  content => "address=/rivendellnas/${rivendell_nas}",
+  ensure => $rivendell_nas ? {
+    "" => absent,
+    default => present
+  }
+}
