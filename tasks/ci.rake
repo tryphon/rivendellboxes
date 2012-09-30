@@ -11,5 +11,5 @@ boxes.each { |box| task :ci => "#{box}:clean" }
 boxes.each { |box| task :ci => "#{box}:dist:all" }
 task :ci => "rivendellboxes:dist:upgrade"
 boxes.each { |box| task :ci => "#{box}:buildbot:dist" }
-task :ci => "rivendellboxes:buildot:dist"
+task :ci => "rivendellboxes:buildbot:dist"
 
