@@ -22,6 +22,16 @@ class rivendell::station {
     ensure => "4.08.07-1" 
   }
 
+  file { "/usr/share/qt3/include": 
+    ensure => directory,
+    require => Package[rivendell]
+  }
+
+  file { "/usr/share/qt3/include/qnamespace.h": 
+    source => "puppet:///files/rivendell/qnamespace.h",
+    require => Package[rivendell]
+  }
+
   include rivendell::common
   include mount
   

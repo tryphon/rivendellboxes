@@ -7,12 +7,15 @@ require 'system_builder/box_tasks'
 
 SystemBuilder::BoxTasks.multiple_boxes = true
 
+kernel_options = "usbhid.quirks=0xeef:0x1:0x40"
+
 SystemBuilder::BoxTasks.new(:rivendellallbox) do |box|
   box.boot do |boot|
     boot.version = :squeeze
   end
   box.disk_image do |image|
     image.size = 1024.megabytes
+    image.kernel_options = kernel_options
   end
 end
 
@@ -31,6 +34,7 @@ SystemBuilder::BoxTasks.new(:rivendellairbox) do |box|
   end
   box.disk_image do |image|
     image.size = 600.megabytes
+    image.kernel_options = kernel_options
   end
 end
 
