@@ -1,0 +1,8 @@
+DATABASE=/srv/rivendell/tmp/db.sqlite3
+CONFIG=/srv/rivendell/ftp/dropboxes/config.rb
+DIRECTORY=/srv/rivendell/ftp/dropboxes
+
+DAEMON_OPTS="--syslog --daemon --pid-dir /var/run --debug --database $DATABASE --config $CONFIG --listen $DIRECTORY"
+
+DAEMON_USER="radio"
+DAEMON_GROUP="rivendell"
