@@ -171,6 +171,8 @@ class rivendell::server {
   include mysql::server
   include ftp::server
 
+  include rivendell::import
+
   package { rivendell-server: 
     require => Apt::Source[tryphon],
     ensure => $rivendell::release
@@ -235,6 +237,40 @@ class rivendell::server {
     ensure => "/usr/local/sbin/rivendell-backup-db",
     require => Package[cron]
   }
+}
+
+class rivendell::import {
+  ruby::gem { "rivendell-import": 
+    require => Package[libsqlite3-dev],
+    ensure => "0.0.3"
+  }
+  package { libsqlite3-dev: }
+  ruby::gem { rb-inotify: ensure => "0.8.8" }
+  
+  file { "/etc/default/rivendell-import":
+    source => "puppet:///files/rivendell-import/rivendell-import.default"
+  }
+
+  file { "/etc/init.d/rivendell-import":
+    source => "puppet:///files/rivendell-import/rivendell-import.init",
+    mode => 755
+  }
+  exec { "update-rc.d-rivendell-import":
+    command => "insserv rivendell-import",
+    require => File["/etc/init.d/rivendell-import"],
+    unless => "ls /etc/rc?.d/S*rivendell-import > /dev/null 2>&1"
+  }
+
+  file { "/etc/puppet/manifests/classes/rivendell-import.pp":
+    source => "puppet:///files/rivendell-import/manifest.pp"
+  }
+  file { "/etc/puppet/files/rivendell-import":
+    ensure => directory
+  }
+  file { "/etc/puppet/files/rivendell-import/config.rb":
+    source => "puppet:///files/rivendell-import/config.rb"
+  }
+
 }
 
 class rivendell::storage {
