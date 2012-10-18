@@ -9,6 +9,10 @@ class release::airbox {
     source => "puppet:///files/release/box-air-release-init.cron",
     require => Package[cron]
   }
+
+  steto::conf { box-air-release: 
+    source => "puppet:///files/release/steto-box-air-release.rb"
+  }
 }
 
 class release::boxes {

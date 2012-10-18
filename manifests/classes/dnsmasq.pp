@@ -7,6 +7,10 @@ class dnsmasq {
   file { "/etc/puppet/manifests/classes/dnsmasq.pp":
     source => "puppet:///files/dnsmasq/manifest.pp"
   }
+
+  steto::conf { dnsmasq: 
+    source => "puppet:///files/dnsmasq/steto.rb"
+  }
 }
 
 class dnsmasq::dhcp {

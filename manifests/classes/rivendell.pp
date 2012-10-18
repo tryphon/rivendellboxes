@@ -56,6 +56,10 @@ class rivendell::station {
     mode => 775,
     require => Package[rivendell]
   }
+
+  steto::conf { "rivendell-station": 
+    source => "puppet:///files/rivendell/steto-station.rb"
+  }
 }
 
 class rivendell::common {
@@ -237,6 +241,10 @@ class rivendell::server {
     ensure => "/usr/local/sbin/rivendell-backup-db",
     require => Package[cron]
   }
+
+  steto::conf { "rivendell-server": 
+    source => "puppet:///files/rivendell/steto-server.rb"
+  }
 }
 
 class rivendell::import {
@@ -246,6 +254,11 @@ class rivendell::import {
   }
   package { libsqlite3-dev: }
   ruby::gem { rb-inotify: ensure => "0.8.8" }
+
+  file { "/usr/local/bin/rivendell-import":
+    ensure => "/var/lib/gems/1.8/bin/rivendell-import",
+    require => Ruby::Gem["rivendell-import"]
+  }
   
   file { "/etc/default/rivendell-import":
     source => "puppet:///files/rivendell-import/rivendell-import.default"
@@ -270,7 +283,9 @@ class rivendell::import {
   file { "/etc/puppet/files/rivendell-import/config.rb":
     source => "puppet:///files/rivendell-import/config.rb"
   }
-
+  steto::conf { "rivendell-import": 
+    source => "puppet:///files/rivendell-import/steto.rb"
+  }
 }
 
 class rivendell::storage {
