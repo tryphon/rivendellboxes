@@ -4,6 +4,8 @@
 
   DNSSDServiceName "Tryphon RivendellBox"
 
+  DocumentRoot /var/www
+
   LogLevel warn
 
   # Use only syslog
