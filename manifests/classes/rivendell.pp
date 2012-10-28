@@ -254,11 +254,6 @@ class rivendell::import {
   }
   package { libsqlite3-dev: }
   ruby::gem { rb-inotify: ensure => "0.8.8" }
-
-  file { "/usr/local/bin/rivendell-import":
-    ensure => "/var/lib/gems/1.8/bin/rivendell-import",
-    require => Ruby::Gem["rivendell-import"]
-  }
   
   file { "/etc/default/rivendell-import":
     source => "puppet:///files/rivendell-import/rivendell-import.default"
