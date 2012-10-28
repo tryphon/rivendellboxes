@@ -1,5 +1,5 @@
 class network::dhclient::hostname {
-  package { dnsutils: }
+  include network::dnsutils
   
   file { "/etc/dhcp/dhclient-enter-hooks.d/sethostname":
     source => "puppet:///files/network/sethostname",
