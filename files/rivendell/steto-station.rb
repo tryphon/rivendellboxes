@@ -1,5 +1,5 @@
 Steto.config do
-  nagios :rivendellnas_mysql, "check_mysql", :database => "Rivendell", :host => "rivendellnas"
+  nagios :rivendellnas_mysql, "check_mysql", :database => "Rivendell", :host => "rivendellnas", :username => "rduser", :password => "letmein"
 
   check :rivendellnas_snd do
     Dir["/var/snd/*.wav"].present?
