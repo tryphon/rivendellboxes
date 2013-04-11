@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # REMOVEME Migration for ticket #8
 if ! grep VISUAL ~/.xsessionrc; then
@@ -8,3 +8,6 @@ fi
 if [ ! -f ~/.homesync ]; then
   rsync -a /etc/skel/ ~/ && touch ~/.homesync
 fi
+
+# Remove .rdairplaylock lock (#649)
+pgrep rdairplay > /dev/null || rm -f ~/.rdairplaylock

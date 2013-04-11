@@ -18,3 +18,9 @@ exec { "rivendell-radio-home":
   tag => boot,
   user => radio
 }
+
+file { "/srv/rivendell/home/$macaddress/.xsessionrc":
+  source => "/usr/local/share/rivendell/xsessionrc",
+  owner => radio, group => radio, mode => 755,
+  tag => boot
+}

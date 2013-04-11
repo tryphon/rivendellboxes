@@ -10,10 +10,7 @@ station=$3
 home_directory="/srv/rivendell/home/$mac_address"
 mkdir $home_directory
 
-cat > $home_directory/.xsessionrc <<EOF
-export VISUAL=gedit
-/usr/local/bin/rivendell-init-radio-home
-EOF
+cp /usr/local/share/rivendell/xsessionrc $home_directory/.xsessionrc
 
 # TODO use radio username (doesn't exist on server)
 chown -R radio:rivendell $home_directory
