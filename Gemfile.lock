@@ -13,7 +13,7 @@ GIT
     system-builder (0.0.26)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     builder (3.0.0)
     capybara (0.4.0)
