@@ -14,7 +14,6 @@ SystemBuilder::BoxTasks.new(:rivendellallbox) do |box|
     boot.version = :squeeze
   end
   box.disk_image do |image|
-    image.size = 1024.megabytes
     image.kernel_options = kernel_options
   end
 end
@@ -23,9 +22,6 @@ SystemBuilder::BoxTasks.new(:rivendellnasbox) do |box|
   box.boot do |boot|
     boot.version = :squeeze
   end
-  box.disk_image do |image|
-    image.size = 512.megabytes
-  end
 end
 
 SystemBuilder::BoxTasks.new(:rivendellairbox) do |box|
@@ -33,7 +29,6 @@ SystemBuilder::BoxTasks.new(:rivendellairbox) do |box|
     boot.version = :squeeze
   end
   box.disk_image do |image|
-    image.size = 600.megabytes
     image.kernel_options = kernel_options
   end
 end
@@ -42,7 +37,14 @@ namespace :rivendellallbox do
   namespace :storage do
     desc "Create storage disk"
     task :create do
-      sh "qemu-img create -f qcow2 dist/rivendellallbox/storage 1G"
+      if ENV['COUNT'] == "2"
+        2.times do |n|
+          file = "dist/rivendellallbox/storage#{n+1}"
+          sh "qemu-img create -f raw #{file} 3G" unless File.exists?(file)
+        end
+      else
+        sh "qemu-img create -f raw dist/rivendellallbox/storage 3G"
+      end
     end
   end
 end
