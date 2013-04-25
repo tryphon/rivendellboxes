@@ -31,6 +31,6 @@ function cfg_parser() {
 cfg_parser '/etc/rd.conf'
 cfg.section.mySQL
 
-mysqldump --opt -u $Loginname -p$Password $Database > $backup_file
+mysqldump --opt --single-transaction -u $Loginname -p$Password $Database > $backup_file
 find $backup_dir -mtime +$shelf_life -name "database-*.sql" | xargs -r rm 
 
