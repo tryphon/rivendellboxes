@@ -8,7 +8,6 @@ $source_base="/tmp/puppet"
 
 include box
 
-include users
 include munin-node::local
 
 include apache
