@@ -13,28 +13,30 @@ class rivendell::station {
   include gnome::minimal
   include gnome::vnc
 
-  package { rivendell: 
+  package { rivendell:
     require => Apt::Source[tryphon],
     ensure => $rivendell::release
   }
-  package { libhpi: 
+  package { libhpi:
     require => Apt::Source[tryphon],
     ensure => "4.08.07-2"
   }
 
-  file { "/usr/share/qt3/include": 
+  file { "/usr/share/qt3/include":
     ensure => directory,
     require => Package[rivendell]
   }
 
-  file { "/usr/share/qt3/include/qnamespace.h": 
+  file { "/usr/share/qt3/include/qnamespace.h":
     source => "puppet:///files/rivendell/qnamespace.h",
     require => Package[rivendell]
   }
 
+  package { strace: }
+
   include rivendell::common
   include mount
-  
+
   file { "/usr/share/rivendell/rdairplay_fr.qm":
     source => "puppet:///files/rivendell/fr/rdairplay_fr.qm",
     require => Package[rivendell]
@@ -57,7 +59,7 @@ class rivendell::station {
     require => Package[rivendell]
   }
 
-  steto::conf { "rivendell-station": 
+  steto::conf { "rivendell-station":
     source => "puppet:///files/rivendell/steto-station.rb"
   }
 }
@@ -75,12 +77,12 @@ class rivendell::common {
     File["/etc/rd.conf"] { require => Package[rivendell-server] }
   }
 
-  group { rivendell: 
+  group { rivendell:
     gid => 2000
   }
 
   # FIXME librivendell dependency doesn't include release (rivendell2-debian #6)
-  package { librivendell: 
+  package { librivendell:
     require => Apt::Source[tryphon],
     ensure => $rivendell::release
   }
@@ -148,7 +150,7 @@ class rivendell::station::user inherits rivendell::user {
 
   desktop_launcher { [rdairplay, rdadmin, rdlibrary, rdlogedit]: }
 
-  file { "/usr/local/bin/rivendell-init-radio-home": 
+  file { "/usr/local/bin/rivendell-init-radio-home":
     source => "puppet:///files/rivendell/rivendell-init-radio-home",
     mode => 755
   }
@@ -177,7 +179,7 @@ class rivendell::server {
 
   include rivendell::import
 
-  package { rivendell-server: 
+  package { rivendell-server:
     require => Apt::Source[tryphon],
     ensure => $rivendell::release
   }
@@ -208,7 +210,7 @@ class rivendell::server {
     ensure => "/srv/rivendell/snd",
     force => true,
     # invalid link breaks package install
-    require => Package[rivendell-server] 
+    require => Package[rivendell-server]
   }
 
   file { "/usr/local/sbin/rivendell-migratedb":
@@ -245,19 +247,19 @@ class rivendell::server {
     require => Package[cron]
   }
 
-  steto::conf { "rivendell-server": 
+  steto::conf { "rivendell-server":
     source => "puppet:///files/rivendell/steto-server.rb"
   }
 }
 
 class rivendell::import {
-  ruby::gem { "rivendell-import": 
+  ruby::gem { "rivendell-import":
     require => Package[libsqlite3-dev],
     ensure => "0.0.3"
   }
   package { libsqlite3-dev: }
   ruby::gem { rb-inotify: ensure => "0.8.8" }
-  
+
   file { "/etc/default/rivendell-import":
     source => "puppet:///files/rivendell-import/rivendell-import.default"
   }
@@ -281,7 +283,7 @@ class rivendell::import {
   file { "/etc/puppet/files/rivendell-import/config.rb":
     source => "puppet:///files/rivendell-import/config.rb"
   }
-  steto::conf { "rivendell-import": 
+  steto::conf { "rivendell-import":
     source => "puppet:///files/rivendell-import/steto.rb"
   }
 }
@@ -295,7 +297,7 @@ class rivendell::nfs {
 
   package { [nfs-kernel-server, portmap]: }
 
-  file { "/etc/exports": 
+  file { "/etc/exports":
     source => "puppet:///files/nfs/exports"
   }
 }
@@ -303,13 +305,11 @@ class rivendell::nfs {
 class rivendell::station::nfs {
   include nfs::common
 
-  file { "/var/snd": 
-   ensure => directory 
+  file { "/var/snd":
+   ensure => directory
   }
 
   include autofs
-  
-  package { strace: }
 
   file { "/etc/auto.master":
     content => "/- /etc/auto.rivendell\n",
@@ -319,7 +319,7 @@ class rivendell::station::nfs {
   file { "/etc/auto.rivendell":
     source => "puppet:///files/autofs/autofs.rivendell"
   }
-  
+
   file { "/etc/default/autofs":
     source => "puppet:///files/autofs/autofs.default",
     require => Package[autofs]
@@ -337,7 +337,7 @@ class rivendell::station::nfs {
 }
 
 class rivendell::box::nas {
-  include rivendell::server  
+  include rivendell::server
   include dnsmasq
   include dnsmasq::dhcp
   include release::airbox
@@ -356,7 +356,7 @@ class rivendell::box::nas {
 }
 
 class rivendell::box::air {
-  include rivendell::station  
+  include rivendell::station
   include rivendell::station::nfs
 
   # to configure rivendellnas (when needed)
@@ -371,7 +371,7 @@ class rivendell::box::air {
 }
 
 class rivendell::box::all {
-  include rivendell::server  
+  include rivendell::server
   include rivendell::station
 
   include dnsmasq
