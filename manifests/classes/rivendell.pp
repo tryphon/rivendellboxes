@@ -255,10 +255,10 @@ class rivendell::server {
 class rivendell::import {
   ruby::gem { "rivendell-import":
     require => Package[libsqlite3-dev],
-    ensure => "0.0.3"
+    ensure => "0.0.5"
   }
-  package { libsqlite3-dev: }
-  ruby::gem { rb-inotify: ensure => "0.8.8" }
+  package { [libsqlite3-dev, libmysqlclient-dev]: }
+  ruby::gem { rb-inotify: ensure => "0.9.0" }
 
   file { "/etc/default/rivendell-import":
     source => "puppet:///files/rivendell-import/rivendell-import.default"
