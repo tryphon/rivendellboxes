@@ -7,3 +7,9 @@ class network::dhclient::hostname {
     require => Package[dhcp3-client]
   }
 }
+
+class network::vlan::migrations {
+  box::config::migration { "20130701211127_move_to_vlan100":
+    source => "puppet:///files/network/20130701211127_move_to_vlan100.rb"
+  }
+}
