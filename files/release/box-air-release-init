@@ -14,7 +14,7 @@ trap "rm -f $lock_file" EXIT
 cd /srv/rivendell/boot
 
 # FIXME
-release_server=`ruby -e "require 'rubygems'; require 'box'; Box::CLI::Root.new.setup ; puts Box::Release.download_server"`
+release_server=`ruby -e "require 'rubygems'; require 'box'; Box.setup ; puts Box::Release.download_server"`
 release_name=`sed -n -e 's/nas/air/' -e '/name/ s/name: //p' /boot/current.yml`
 
 if [ -f "initrd-${release_name}.img" ]; then
