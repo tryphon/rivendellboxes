@@ -19,7 +19,7 @@ class rivendell::station {
   }
   package { libhpi:
     require => Apt::Source[tryphon],
-    ensure => "4.08.07-2"
+    ensure => "4.08.07-3"
   }
 
   file { "/usr/share/qt3/include":
