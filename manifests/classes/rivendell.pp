@@ -7,6 +7,7 @@ class rivendell::station {
   include rivendell
 
   include apt::tryphon
+  include apt::tryphon::dev
   include apt::multimedia
 
   $gdm_automaticlogin = "radio"
@@ -14,11 +15,11 @@ class rivendell::station {
   include gnome::vnc
 
   package { rivendell:
-    require => Apt::Source[tryphon],
+    require => [Apt::Source[tryphon-dev], Package[librivendell]],
     ensure => $rivendell::release
   }
   package { libhpi:
-    require => Apt::Source[tryphon],
+    require => Apt::Source[tryphon-dev],
     ensure => "4.08.07-3"
   }
 
@@ -83,7 +84,7 @@ class rivendell::common {
 
   # FIXME librivendell dependency doesn't include release (rivendell2-debian #6)
   package { librivendell:
-    require => Apt::Source[tryphon],
+    require => Apt::Source[tryphon-dev],
     ensure => $rivendell::release
   }
 
@@ -180,7 +181,7 @@ class rivendell::server {
   include rivendell::import
 
   package { rivendell-server:
-    require => Apt::Source[tryphon],
+    require => Apt::Source[tryphon-dev],
     ensure => $rivendell::release
   }
   include rivendell::common
