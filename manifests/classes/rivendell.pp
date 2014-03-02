@@ -1,5 +1,5 @@
 class rivendell {
-  $release = "2.5.5-2"
+  $release = "2.7.0-1"
 }
 
 # Used in rivendellairbox AND rivendellallbox
@@ -91,7 +91,12 @@ class rivendell::common {
 
 class rivendell::audio {
   $amixerconf_mode="duplex"
+
+  link { "/etc/asound.conf":
+    target => "/var/etc/asound.conf"
+  }
   include box::audio
+
 }
 
 class rivendell::mpeg {
