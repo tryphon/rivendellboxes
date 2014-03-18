@@ -19,6 +19,13 @@ GIT
       trollop
 
 GIT
+  remote: git://projects.tryphon.priv/ruby-qemu
+  revision: 9153eccd3ac589f03e8419e90f51fd35c64ff40a
+  specs:
+    qemu (0.0.2)
+      daemons
+
+GIT
   remote: git://projects.tryphon.priv/system-builder
   revision: ccbe2257d4d0e3e434d7c5d7f8e0c4c2be014373
   specs:
@@ -104,8 +111,6 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    qemu (0.0.1)
-      daemons
     rack (1.2.1)
     rack-test (0.5.6)
       rack (>= 1.0)
@@ -152,6 +157,7 @@ DEPENDENCIES
   cucumber
   guard
   guard-rspec
+  qemu!
   rake
   rspec
   system-builder!
