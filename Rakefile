@@ -68,7 +68,7 @@ end
 namespace :rivendellboxes do
 
   def latest_release_number
-    YAML.load(IO.read("dist/rivendellairbox/latest.yml"))["name"].scan(/box-([0-9-]+)$/).to_s
+    YAML.load(IO.read("dist/rivendellairbox/latest.yml"))["name"].scan(/box-([0-9-]+)$/).join
   end
 
   namespace :dist do
@@ -85,7 +85,8 @@ namespace :rivendellboxes do
       target_directory = (ENV['DIST'] or "#{ENV['HOME']}/dist/rivendellboxes")
       mkdir_p target_directory
       cp "dist/rivendellboxes/upgrade.tar", "#{target_directory}/rivendellboxes-#{latest_release_number}.tar"
-      cp "dist/rivendellboxes/latest.yml", "#{target_directory}/latest.yml"
+      cp "dist/rivendellboxes/latest.yml", "#{target_directory}/rivendellboxes-#{latest_release_number}.yml"
+      ln_sf "#{target_directory}/rivendellboxes-#{latest_release_number}.yml", "#{target_directory}/latest.yml"
     end
   end
 
