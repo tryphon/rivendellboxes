@@ -33,38 +33,6 @@ SystemBuilder::BoxTasks.new(:rivendellairbox) do |box|
   end
 end
 
-namespace :rivendellallbox do
-  namespace :storage do
-    desc "Create storage disk"
-    task :create do
-      if ENV['COUNT'] == "2"
-        2.times do |n|
-          file = "dist/rivendellallbox/storage#{n+1}"
-          sh "qemu-img create -f raw #{file} 3G" unless File.exists?(file)
-        end
-      else
-        sh "qemu-img create -f raw dist/rivendellallbox/storage 3G"
-      end
-    end
-  end
-end
-
-namespace :rivendellnasbox do
-  namespace :storage do
-    desc "Create storage disk"
-    task :create do
-      if ENV['COUNT'] == "2"
-        2.times do |n|
-          file = "dist/rivendellnasbox/storage#{n+1}"
-          sh "qemu-img create -f raw #{file} 3G" unless File.exists?(file)
-        end
-      else
-        sh "qemu-img create -f raw dist/rivendellnasbox/storage 3G"
-      end
-    end
-  end
-end
-
 namespace :rivendellboxes do
 
   def latest_release_number
