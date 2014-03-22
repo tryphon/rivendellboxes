@@ -1,10 +1,20 @@
-<VirtualHost *:80>      
+<VirtualHost *:80>
   ServerName rivendellbox.local
   ServerAdmin support@tryphon.eu
 
   DNSSDServiceName "Tryphon RivendellBox"
 
-  DocumentRoot /var/www
+  DocumentRoot /usr/share/rivendellcontrol/public
+  PassengerDefaultUser www-data
+  PassengerMaxPoolSize 3
+  PassengerMaxRequests 1000
+  PassengerLogLevel 3
+  PassengerRuby /usr/bin/ruby1.9.1
+  <Directory /usr/share/rivendellcontrol/public>
+     AllowOverride None
+     Order allow,deny
+     Allow from all
+  </Directory>
 
   LogLevel warn
 

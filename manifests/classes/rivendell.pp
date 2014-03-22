@@ -179,6 +179,7 @@ class rivendell::server {
   include ftp::server
 
   include rivendell::import
+  include rivendellcontrol
 
   package { rivendell-server:
     require => Apt::Source[tryphon-dev],
