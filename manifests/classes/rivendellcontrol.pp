@@ -14,7 +14,7 @@ class rivendellcontrol {
   }
   package { rivendellcontrol:
     ensure => "latest",
-    require => [Apt::Source[tryphon-dev], Package[libapache2-mod-passenger]]
+    require => [Apt::Source[tryphon-dev], Package[libapache2-mod-passenger], Package["ruby1.9.1"]]
   }
 
   readonly::mount_tmpfs { "/var/lib/rivendellcontrol": }
