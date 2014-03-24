@@ -9,6 +9,9 @@
 # rivendellnasbox/upgrade.tar
 # rivendellnasbox/latest.yml
 
+if [ "$USER" != "root" ]; then
+  exec sudo $0 $@
+fi
 
 tar_file=$1
 current_file=$2
