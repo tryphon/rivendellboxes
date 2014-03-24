@@ -1,5 +1,5 @@
 if $dhcp_range_begin == "" {
-  $dhcp_range_begin = $network_static_address
+  $dhcp_range_begin = regsubst($ipaddress_eth0,'^(\d+\.\d+\.\d+)\.\d+$','\1.100')
 }
 
 dnsmasq::conf { dhcp-server:
@@ -14,6 +14,10 @@ file { "/srv/rivendell/boot":
   ensure => directory,
   tag => boot,
   require => Exec["storage-mount-rivendell"]
+}
+
+if $nfsroot_static_address == "" {
+  $nfsroot_static_address = $ipaddress_eth0
 }
 
 file { "/srv/rivendell/boot/pxelinux.cfg":
