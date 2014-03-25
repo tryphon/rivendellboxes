@@ -1,4 +1,4 @@
-DATABASE=/srv/rivendell/tmp/db.sqlite3
+DATABASE='mysql://import:import@localhost/import'
 CONFIG=/srv/rivendell/ftp/dropboxes/config.rb
 DIRECTORY=/srv/rivendell/ftp/dropboxes
 
