@@ -1,5 +1,5 @@
 class rivendell {
-  $release = "2.7.0-1"
+  $release = "2.8.1-2"
 }
 
 # Used in rivendellairbox AND rivendellallbox
@@ -9,6 +9,7 @@ class rivendell::station {
   include apt::tryphon
   include apt::tryphon::dev
   include apt::multimedia
+  include apt::backport
 
   $gdm_automaticlogin = "radio"
   include gnome::minimal
@@ -21,6 +22,18 @@ class rivendell::station {
   package { libhpi:
     require => Apt::Source[tryphon-dev],
     ensure => "4.08.07-3"
+  }
+
+  package { linux-base:
+    ensure => "3.4~bpo60+1"
+  }
+
+  package { initramfs-tools:
+    ensure => "0.109.1~bpo60+1"
+  }
+
+  package { "linux-image-3.2.0-0.bpo.4-686-pae":
+    ensure => "3.2.54-2~bpo60+1"
   }
 
   file { "/usr/share/qt3/include":
@@ -63,20 +76,34 @@ class rivendell::station {
   steto::conf { "rivendell-station":
     source => "puppet:///files/rivendell/steto-station.rb"
   }
+
+  file { "/etc/puppet/manifests/classes/rivendell-station.pp":
+    source => "puppet:///files/rivendell/manifest-station.pp"
+  }
+
+  file { "/etc/rd.conf":
+    ensure => link,
+    target => "/var/etc/rd.conf",
+    require => Package[rivendell]
+  }
+
+  file { "/etc/puppet/templates/rivendell":
+    ensure => directory
+  }
+
+  file { "/etc/puppet/templates/rivendell/rd.conf":
+    source => "puppet:///files/puppet/templates/rd.conf"
+  }
 }
 
 class rivendell::common {
   include rivendell
 
-  file { "/etc/rd.conf":
-    source => ["puppet:///files/rivendell/rd.conf.${box_name}", "puppet:///files/rivendell/rd.conf"]
-  }
-
-  if defined(Package[rivendell]) {
-    File["/etc/rd.conf"] { require => Package[rivendell] }
-  } else {
-    File["/etc/rd.conf"] { require => Package[rivendell-server] }
-  }
+#  if defined(Package[rivendell]) {
+#    File["/etc/rd.conf"] { require => Package[rivendell] }
+#  } else {
+#    File["/etc/rd.conf"] { require => Package[rivendell-server] }
+#  }
 
   group { rivendell:
     gid => 2000
@@ -93,9 +120,6 @@ class rivendell::common {
 class rivendell::audio {
   $amixerconf_mode="duplex"
 
-  link { "/etc/asound.conf":
-    target => "/var/etc/asound.conf"
-  }
   include box::audio
 
 }
@@ -128,9 +152,9 @@ class rivendell::station::user inherits rivendell::user {
   }
 
   include rsync
-  file { "/etc/puppet/manifests/classes/rivendell-station.pp":
-    source => "puppet:///files/rivendell/manifest-station.pp"
-  }
+#  file { "/etc/puppet/manifests/classes/rivendell-station.pp":
+#   source => "puppet:///files/rivendell/manifest-station.pp"
+#  }
 
   package { polymer: }
   file { "/etc/skel/.qt":
@@ -353,6 +377,10 @@ class rivendell::box::nas {
   include network::iptables
   include network::gateway
   include rsyslog::server
+
+  file { "/etc/rd.conf":
+    source => ["puppet:///files/rivendell/rd.conf.${box_name}", "puppet:///files/rivendell/rd.conf"]
+  }
 
   # FIXME
   file { "/etc/cron.hourly/ping-for-remote-ip":

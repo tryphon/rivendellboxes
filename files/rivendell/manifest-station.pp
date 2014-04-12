@@ -5,3 +5,8 @@ dnsmasq::conf { rivendell_nas:
     default => present
   }
 }
+
+file { "/var/etc/rd.conf":
+  content => template("/etc/puppet/templates/rivendell/rd.conf"),
+  tag => boot
+}
