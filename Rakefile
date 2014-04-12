@@ -33,42 +33,10 @@ SystemBuilder::BoxTasks.new(:rivendellairbox) do |box|
   end
 end
 
-namespace :rivendellallbox do
-  namespace :storage do
-    desc "Create storage disk"
-    task :create do
-      if ENV['COUNT'] == "2"
-        2.times do |n|
-          file = "dist/rivendellallbox/storage#{n+1}"
-          sh "qemu-img create -f raw #{file} 3G" unless File.exists?(file)
-        end
-      else
-        sh "qemu-img create -f raw dist/rivendellallbox/storage 3G"
-      end
-    end
-  end
-end
-
-namespace :rivendellnasbox do
-  namespace :storage do
-    desc "Create storage disk"
-    task :create do
-      if ENV['COUNT'] == "2"
-        2.times do |n|
-          file = "dist/rivendellnasbox/storage#{n+1}"
-          sh "qemu-img create -f raw #{file} 3G" unless File.exists?(file)
-        end
-      else
-        sh "qemu-img create -f raw dist/rivendellnasbox/storage 3G"
-      end
-    end
-  end
-end
-
 namespace :rivendellboxes do
 
   def latest_release_number
-    YAML.load(IO.read("dist/rivendellairbox/latest.yml"))["name"].scan(/box-([0-9-]+)$/).to_s
+    YAML.load(IO.read("dist/rivendellairbox/latest.yml"))["name"].scan(/box-([0-9-]+)$/).join
   end
 
   namespace :dist do
@@ -85,7 +53,8 @@ namespace :rivendellboxes do
       target_directory = (ENV['DIST'] or "#{ENV['HOME']}/dist/rivendellboxes")
       mkdir_p target_directory
       cp "dist/rivendellboxes/upgrade.tar", "#{target_directory}/rivendellboxes-#{latest_release_number}.tar"
-      cp "dist/rivendellboxes/latest.yml", "#{target_directory}/latest.yml"
+      cp "dist/rivendellboxes/latest.yml", "#{target_directory}/rivendellboxes-#{latest_release_number}.yml"
+      ln_sf "#{target_directory}/rivendellboxes-#{latest_release_number}.yml", "#{target_directory}/latest.yml"
     end
   end
 

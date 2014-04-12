@@ -12,3 +12,11 @@ if ! mysql Rivendell -NBe 'show tables' | grep -q CART; then
     echo "Create Rivendell tables"
     mysql Rivendell < /usr/local/share/rivendell/rivendell.sql
 fi
+
+if ! mysql mysql -NBe 'show databases' | grep -q import; then
+    echo "Create Rivendell Import database"
+
+    mysqladmin create import
+    mysql mysql -e "GRANT ALL PRIVILEGES ON import.* TO 'import'@'localhost' IDENTIFIED BY 'import'"
+    mysqladmin flush-privileges
+fi
