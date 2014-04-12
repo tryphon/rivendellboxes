@@ -27,7 +27,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/system-builder
-  revision: ccbe2257d4d0e3e434d7c5d7f8e0c4c2be014373
+  revision: ffa721a74b40f6a0649d398376399451bdf1451b
   specs:
     system-builder (0.0.26)
       qemu
