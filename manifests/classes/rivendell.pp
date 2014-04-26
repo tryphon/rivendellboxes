@@ -9,7 +9,6 @@ class rivendell::station {
   include apt::tryphon
   include apt::tryphon::dev
   include apt::multimedia
-  include apt::backport
 
   $gdm_automaticlogin = "radio"
   include gnome::minimal
@@ -22,18 +21,6 @@ class rivendell::station {
   package { libhpi:
     require => Apt::Source[tryphon-dev],
     ensure => "4.08.07-3"
-  }
-
-  package { linux-base:
-    ensure => "3.4~bpo60+1"
-  }
-
-  package { initramfs-tools:
-    ensure => "0.109.1~bpo60+1"
-  }
-
-  package { "linux-image-3.2.0-0.bpo.4-686-pae":
-    ensure => "3.2.54-2~bpo60+1"
   }
 
   file { "/usr/share/qt3/include":
@@ -99,12 +86,6 @@ class rivendell::station {
 class rivendell::common {
   include rivendell
 
-#  if defined(Package[rivendell]) {
-#    File["/etc/rd.conf"] { require => Package[rivendell] }
-#  } else {
-#    File["/etc/rd.conf"] { require => Package[rivendell-server] }
-#  }
-
   group { rivendell:
     gid => 2000
   }
@@ -151,11 +132,6 @@ class rivendell::station::user inherits rivendell::user {
     source => "puppet:///files/rivendell/rdairplay.desktop.autostart"
   }
 
-  include rsync
-#  file { "/etc/puppet/manifests/classes/rivendell-station.pp":
-#   source => "puppet:///files/rivendell/manifest-station.pp"
-#  }
-
   package { polymer: }
   file { "/etc/skel/.qt":
     ensure => directory
@@ -180,11 +156,11 @@ class rivendell::station::user inherits rivendell::user {
 
   desktop_launcher { [rdairplay, rdadmin, rdlibrary, rdlogedit]: }
 
+  include rsync
   file { "/usr/local/bin/rivendell-init-radio-home":
     source => "puppet:///files/rivendell/rivendell-init-radio-home",
     mode => 755
   }
-
 }
 
 class rivendell::user {
