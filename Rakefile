@@ -11,8 +11,8 @@ kernel_options = "usbhid.quirks=0xeef:0x1:0x40"
 
 SystemBuilder::BoxTasks.new(:rivendellallbox) do |box|
   box.boot do |boot|
-    boot.version = :squeeze
-    boot.kernel_version = "3.2"
+    boot.version = :wheezy
+    boot.architecture = :amd64
   end
   box.disk_image do |image|
     image.kernel_options = kernel_options
