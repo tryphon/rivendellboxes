@@ -11,11 +11,12 @@ class rivendell::station {
   include apt::multimedia
 
   $gdm_automaticlogin = "radio"
-  include gnome::minimal
-  include gnome::vnc
+  #include gnome::minimal
+  #include gnome::vnc
+  include xfce
 
   package { rivendell:
-    require => [Apt::Source[tryphon-dev], Package[librivendell]],
+    require => [Apt::Source[tryphon-dev]],
     ensure => $rivendell::release
   }
   package { libhpi:
@@ -90,12 +91,6 @@ class rivendell::common {
     gid => 2000
   }
 
-  # FIXME librivendell dependency doesn't include release (rivendell2-debian #6)
-  package { librivendell:
-    require => Apt::Source[tryphon-dev],
-    ensure => $rivendell::release
-  }
-
 }
 
 class rivendell::audio {
@@ -114,7 +109,7 @@ class rivendell::station::user inherits rivendell::user {
   include locales
 
   User[radio] {
-    groups +> [audio, adm],
+    groups +> [audio, adm, powerdev, plugdev],
     password => '$6$2Dpz3yn7$IUNqUluNiMLZq6aYDc3cK43BiTKOamNxegwed3PVfMnMbJHDtgyCQnD0OSkBDkJdUAFlZNjb993un4ixe1xOX/',
     home => "/home/radio",
     require => Package[rivendell],
@@ -132,7 +127,8 @@ class rivendell::station::user inherits rivendell::user {
     source => "puppet:///files/rivendell/rdairplay.desktop.autostart"
   }
 
-  package { polymer: }
+  # FIXME not available in wheezy
+  # package { polymer: }
   file { "/etc/skel/.qt":
     ensure => directory
   }
