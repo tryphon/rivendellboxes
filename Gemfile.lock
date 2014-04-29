@@ -20,14 +20,14 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/ruby-qemu
-  revision: 9153eccd3ac589f03e8419e90f51fd35c64ff40a
+  revision: 67cd1b4569d594d502efeb394be0423f37488345
   specs:
-    qemu (0.0.2)
+    qemu (0.3)
       daemons
 
 GIT
   remote: git://projects.tryphon.priv/system-builder
-  revision: 47bdbafd73c036a11eacaf4deb6af391235a2377
+  revision: a88e6b0d69aafdf717679beebcaa3bfdb63a8517
   specs:
     system-builder (0.0.26)
       qemu
@@ -35,13 +35,13 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/vmbox
-  revision: 1da3d79518e20f351ae6707b20255aa8c969c423
+  revision: 3c0a92bc0a7f3a90d47fce4bb4be72570af4e54e
   specs:
     tryphon-vmbox (0.0.1)
       activesupport (~> 3.2.1)
       json
       net-ssh
-      qemu
+      qemu (~> 0.3)
 
 GEM
   remote: https://rubygems.org/
@@ -101,7 +101,7 @@ GEM
       nokogiri (>= 1.2.1)
     method_source (0.8.2)
     mime-types (1.16)
-    multi_json (1.9.0)
+    multi_json (1.9.3)
     multi_xml (0.5.5)
     net-ssh (2.8.0)
     nokogiri (1.5.5)
