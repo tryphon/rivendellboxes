@@ -1,0 +1,11 @@
+# Default empty asound.conf
+# Use $alsa_config to override
+
+pcm.rd0 {
+  type hw
+  card 0
+}
+ctl.rd0 {
+  type hw
+  card 0
+}
