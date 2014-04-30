@@ -111,6 +111,11 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    puppet (2.7.21)
+      facter (~> 1.5)
+    puppet-syntax (1.2.0)
+      puppet (>= 2.7.0)
+      rake
     rack (1.2.1)
     rack-test (0.5.6)
       rack (>= 1.0)
@@ -157,6 +162,7 @@ DEPENDENCIES
   cucumber
   guard
   guard-rspec
+  puppet-syntax
   qemu!
   rake
   rspec

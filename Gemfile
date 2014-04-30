@@ -5,6 +5,8 @@ gem "system-builder", :git => "git://projects.tryphon.priv/system-builder" #, :p
 gem "tryphon-vmbox", :git => "git://projects.tryphon.priv/vmbox" #, :path => "~/Projects/VMBox"
 gem "qemu", :git => "git://projects.tryphon.priv/ruby-qemu" #, :path => "~/Projects/RubyQEMU"
 
+gem "puppet-syntax"
+
 group :test, :cucumber do
   gem "rspec"
   gem "tryphon-box", :git => "git://projects.tryphon.priv/box" #, :path => "~/Projects/Box"
