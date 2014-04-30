@@ -21,14 +21,15 @@ end
 
 SystemBuilder::BoxTasks.new(:rivendellnasbox) do |box|
   box.boot do |boot|
-    boot.version = :squeeze
+    boot.version = :wheezy
+    boot.architecture = :amd64
   end
 end
 
 SystemBuilder::BoxTasks.new(:rivendellairbox) do |box|
   box.boot do |boot|
-    boot.version = :squeeze
-    boot.kernel_version = "3.2"
+    boot.version = :wheezy
+    boot.architecture = :amd64
   end
   box.disk_image do |image|
     image.kernel_options = kernel_options
