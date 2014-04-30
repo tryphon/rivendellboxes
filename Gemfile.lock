@@ -113,6 +113,7 @@ GEM
       slop (~> 3.4)
     puppet (2.7.21)
       facter (~> 1.5)
+    puppet-lint (0.3.2)
     puppet-syntax (1.2.0)
       puppet (>= 2.7.0)
       rake
@@ -162,6 +163,7 @@ DEPENDENCIES
   cucumber
   guard
   guard-rspec
+  puppet-lint
   puppet-syntax
   qemu!
   rake

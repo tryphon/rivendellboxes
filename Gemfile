@@ -6,6 +6,7 @@ gem "tryphon-vmbox", :git => "git://projects.tryphon.priv/vmbox" #, :path => "~/
 gem "qemu", :git => "git://projects.tryphon.priv/ruby-qemu" #, :path => "~/Projects/RubyQEMU"
 
 gem "puppet-syntax"
+gem "puppet-lint"
 
 group :test, :cucumber do
   gem "rspec"
