@@ -233,11 +233,16 @@ class rivendell::server {
     source => "puppet:///files/rivendell/rivendell-db.init",
     mode => 755
   }
-
-  exec { "update-rc.d-rivendell-db":
-    command => "insserv rivendell-db",
+  initd_script { 'rivendell-db':
     require => [File["/etc/init.d/rivendell-db"], Package[mysql-server]],
-    unless => "ls /etc/rc?.d/S*rivendell-db > /dev/null 2>&1"
+  }
+
+  file { "/etc/init.d/rivendell":
+    source => "puppet:///files/rivendell/rivendell.init",
+    mode => 755
+  }
+  initd_script { rivendell:
+    require => File["/etc/init.d/rivendell"]
   }
 
   file { "/usr/local/sbin/rivendell-backup-db":
