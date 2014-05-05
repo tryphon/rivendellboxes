@@ -221,8 +221,8 @@ class rivendell::server {
     mode => 755
   }
 
-  file { "/usr/local/sbin/rivendell-add-station":
-    source => "puppet:///files/rivendell/rivendell-add-station",
+  file { "/usr/local/bin/rivendell":
+    source => "puppet:///files/rivendell/rivendell.rb",
     mode => 755
   }
   file { "/usr/local/share/rivendell/xsessionrc":

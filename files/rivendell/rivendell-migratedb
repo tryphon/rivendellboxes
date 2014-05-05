@@ -1,4 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
+LOG_TOPIC="rivendell-migratedb"
+LOG_TOPIC_OUT="$LOG_TOPIC-out[$$]"
+LOG_TOPIC_ERR="$LOG_TOPIC-err[$$]"
+
+exec > >(logger -t "$LOG_TOPIC_OUT")
+exec 2> >(logger -t "$LOG_TOPIC_ERR" )
 
 if ! mysql mysql -NBe 'show databases' | grep -q Rivendell; then
     echo "Create Rivendell database"
@@ -19,4 +26,8 @@ if ! mysql mysql -NBe 'show databases' | grep -q import; then
     mysqladmin create import
     mysql mysql -e "GRANT ALL PRIVILEGES ON import.* TO 'import'@'localhost' IDENTIFIED BY 'import'"
     mysqladmin flush-privileges
+fi
+
+if grep -q rivendellallbox /boot/current.yml; then
+    /usr/local/bin/rivendell station add --name=rivendellallbox --ip-address=127.0.0.2
 fi
