@@ -280,10 +280,9 @@ class rivendell::import {
     source => "puppet:///files/rivendell-import/rivendell-import.init",
     mode => 755
   }
-  exec { "update-rc.d-rivendell-import":
-    command => "insserv rivendell-import",
-    require => File["/etc/init.d/rivendell-import"],
-    unless => "ls /etc/rc?.d/S*rivendell-import > /dev/null 2>&1"
+
+  initd_script { 'rivendell-import':
+    require => Initd_Script['rivendell-db']
   }
 
   file { "/etc/puppet/manifests/classes/rivendell-import.pp":
