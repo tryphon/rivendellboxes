@@ -5,3 +5,5 @@ local.rb
 puppet.log
 *~
 .ruby-version
+/tmp/*
+/log/

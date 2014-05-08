@@ -1,0 +1,62 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          x11vnc
+# Required-Start:    $network $named $remote_fs $syslog lightdm
+# Required-Stop:     $network $named $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/bin/x11vnc
+NAME="x11vnc"
+DESC="VNC shared screen"
+
+PASSWORD_FILE="/etc/x11vnc/password"
+PID_FILE="/var/run/$NAME.pid"
+DAEMON_OPTS="-auth /var/run/lightdm/root/:0 -display :0 -forever -shared -o /var/log/x11vnc.log -passwdfile $PASSWORD_FILE"
+
+test -x $DAEMON || exit 0
+
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+
+. /lib/lsb/init-functions
+
+start_daemon() {
+    if [ -r "$PASSWORD_FILE" ] ; then
+	      start-stop-daemon --start --quiet --pidfile $PID_FILE --background --make-pidfile --startas $DAEMON -- $DAEMON_OPTS
+    else
+	      echo ""
+	      echo "$NAME not configured to start, please define password in $PASSWORD_FILE"
+    fi
+}
+
+stop_daemon() {
+	  start-stop-daemon --stop --quiet --pidfile $PID_FILE
+}
+
+case "$1" in
+    start)
+	      log_begin_msg "Starting $DESC"
+	      start_daemon
+	      log_end_msg 0
+	      ;;
+    stop)
+	      log_begin_msg "Stopping $DESC"
+	      stop_daemon
+	      log_end_msg 0
+	      ;;
+    restart|force-reload)
+	      log_begin_msg "Restarting $DESC"
+	      stop_daemon
+	      sleep 1
+	      start_daemon
+	      log_end_msg 0
+	      ;;
+    *)
+	      echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+	      exit 1
+	      ;;
+esac
+
+exit 0

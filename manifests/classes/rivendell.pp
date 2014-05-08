@@ -10,10 +10,8 @@ class rivendell::station {
   include apt::tryphon::dev
   include apt::multimedia
 
-  $gdm_automaticlogin = "radio"
-  #include gnome::minimal
-  #include gnome::vnc
   include xfce
+  include vnc::server
 
   package { rivendell:
     require => [Apt::Source[tryphon-dev]],
