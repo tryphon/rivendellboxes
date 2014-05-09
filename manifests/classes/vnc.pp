@@ -27,4 +27,8 @@ class vnc::server {
   file { '/etc/puppet/manifests/classes/vnc.pp':
     source => 'puppet:///files/x11vnc/manifest.pp'
   }
+
+  steto::conf { "x11vnc":
+    source => "puppet:///files/x11vnc/steto.rb"
+  }
 }
