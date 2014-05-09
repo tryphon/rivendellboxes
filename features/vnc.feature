@@ -1,4 +1,3 @@
-@wip
 Feature: VNC access
 
   Scenario: Enable VNC screen sharing
@@ -16,7 +15,7 @@ Feature: VNC access
 
   Scenario: Change VNC password
     Given a VNC access has been configured
-    And the box configuration contain vnc_password = "new secret"
+    And the box configuration contains vnc_password = "new secret"
     When the configuration is applied
     Then a VNC access should be possible with password "new secret"
 
