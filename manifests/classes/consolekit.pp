@@ -7,4 +7,9 @@ class consolekit {
       before => Package[consolekit]
     }
   }
+
+  file { "/etc/polkit-1/localauthority/50-local.d/udisks.pkla":
+    source => "puppet:///files/polkit/udisks.pkla",
+    require => Package[policykit-1]
+  }
 }

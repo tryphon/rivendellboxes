@@ -1,0 +1,6 @@
+[org.freedesktop.udisks.filesystem-unmount-others]
+Identity=unix-user:*
+Action=org.freedesktop.udisks.filesystem-unmount-others
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes
