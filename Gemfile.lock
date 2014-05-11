@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/ruby-qemu
-  revision: 0a3bc6ef47eb918962da946ce256e04a0bf661af
+  revision: f962eb7053bb37e97244f5d6504223e86dd5ca47
   specs:
     qemu (0.3)
       daemons
@@ -35,7 +35,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/vmbox
-  revision: c12ec39bbadff1ab101a68ca8d4d51a50577b718
+  revision: 3fa7fb16850fcbcc97eb604e259df5ab36d9a2b0
   specs:
     tryphon-vmbox (0.0.1)
       activesupport (~> 3.2.1)
@@ -78,6 +78,10 @@ GEM
     ffi (0.6.4)
     gherkin (2.7.4)
       json (>= 1.4.6)
+    httmultiparty (0.3.14)
+      httparty (>= 0.7.3)
+      mimemagic
+      multipart-post
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -87,12 +91,15 @@ GEM
     mechanize (1.0.0)
       nokogiri (>= 1.2.1)
     mime-types (1.16)
+    mimemagic (0.2.1)
     multi_json (1.10.0)
     multi_xml (0.5.5)
+    multipart-post (2.0.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.0)
     nokogiri (1.5.5)
+    null_logger (0.0.1)
     parallel (1.0.0)
     polyglot (0.3.4)
     puppet (2.7.21)
@@ -105,6 +112,10 @@ GEM
     rack-test (0.5.6)
       rack (>= 1.0)
     rake (10.1.1)
+    rivendell-api (0.6)
+      activesupport
+      httmultiparty
+      null_logger
     rspec (2.1.0)
       rspec-core (~> 2.1.0)
       rspec-expectations (~> 2.1.0)
@@ -120,10 +131,12 @@ GEM
       ffi (~> 0.6.3)
       json_pure
       rubyzip
+    sshkey (1.6.1)
     steto (0.0.7)
       cocaine (= 0.2.1)
       json
       parallel
+    taglib-ruby (0.4.0)
     term-ansicolor (1.0.7)
     treetop (1.5.3)
       polyglot (~> 0.3)
@@ -143,8 +156,11 @@ DEPENDENCIES
   puppet-syntax
   qemu!
   rake
+  rivendell-api (~> 0.6)
   rspec
   ruby-vnc
+  sshkey
   system-builder!
+  taglib-ruby
   tryphon-box!
   tryphon-vmbox!
