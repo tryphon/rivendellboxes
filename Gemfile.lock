@@ -20,9 +20,9 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/ruby-qemu
-  revision: f962eb7053bb37e97244f5d6504223e86dd5ca47
+  revision: 6cca72e8ed2799d2930634c6dda80bd93ec5eb8f
   specs:
-    qemu (0.3)
+    qemu (0.4)
       daemons
 
 GIT
@@ -35,14 +35,14 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/vmbox
-  revision: 3fa7fb16850fcbcc97eb604e259df5ab36d9a2b0
+  revision: 3f523142255b2cdb59764b6a678fe8e1ed125c23
   specs:
     tryphon-vmbox (0.0.1)
       activesupport (~> 3.2.1)
       json
       net-scp
       net-ssh
-      qemu (~> 0.3)
+      qemu (~> 0.4)
       tryphon-box
 
 GEM
