@@ -2,6 +2,19 @@ class xfce {
   package { xfce4: }
 
   include lightdm
+  include xfce::default_config
+}
+
+class xfce::default_config {
+  file { ['/etc/skel/.config/xfce4',
+    '/etc/skel/.config/xfce4/xfconf',
+    '/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml']:
+    ensure => directory
+  }
+
+  file { '/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/thunar-volman.xml':
+    source => 'puppet:///files/xfce/config/thunar-volman.xml'
+  }
 }
 
 class lightdm {
