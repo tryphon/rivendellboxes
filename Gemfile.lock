@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/ruby-qemu
-  revision: 6cca72e8ed2799d2930634c6dda80bd93ec5eb8f
+  revision: f22b64b1fcccc7ccb9de1905402ffa209548301b
   specs:
     qemu (0.4)
       daemons
@@ -35,7 +35,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/vmbox
-  revision: 3f523142255b2cdb59764b6a678fe8e1ed125c23
+  revision: ab6c34af89d50cb670047394d8fc171c0a2dcc96
   specs:
     tryphon-vmbox (0.0.1)
       activesupport (~> 3.2.1)
@@ -97,7 +97,7 @@ GEM
     multipart-post (2.0.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-ssh (2.9.0)
+    net-ssh (2.9.1)
     nokogiri (1.5.5)
     null_logger (0.0.1)
     parallel (1.0.0)

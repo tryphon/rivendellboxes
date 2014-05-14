@@ -11,8 +11,6 @@ require 'capybara/cucumber'
 require 'capybara/session'
 require 'capybara/mechanize'
 
-require File.expand_path('../box.rb', __FILE__)
-
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
 # prefer to use XPath just remove this line and adjust any selectors in your
@@ -20,4 +18,3 @@ require File.expand_path('../box.rb', __FILE__)
 Capybara.default_selector = :css
 
 Capybara.default_driver = :mechanize
-Capybara.app_host = current_box.url
