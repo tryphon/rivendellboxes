@@ -14,7 +14,7 @@ class rivendell::station {
   include vnc::server
 
   package { rivendell:
-    require => [Apt::Source[tryphon-dev]],
+    require => [Apt::Source['tryphon-dev'], Package['librivendell']],
     ensure => $rivendell::release
   }
   package { libhpi:
@@ -89,6 +89,10 @@ class rivendell::common {
     gid => 2000
   }
 
+  package { 'librivendell':
+    require => Apt::Source['tryphon-dev'],
+    ensure => $rivendell::release
+   }
 }
 
 class rivendell::audio {
