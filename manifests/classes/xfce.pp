@@ -1,8 +1,24 @@
 class xfce {
-  package { xfce4: }
+  package { 'xfce4': }
 
   include lightdm
   include xfce::default_config
+  include xfce::midori
+}
+
+class xfce::midori {
+  package { 'midori': }
+
+  file { '/etc/skel/.config/midori':
+    ensure => directory
+  }
+  file { '/etc/skel/.config/midori/config':
+    content => "
+[settings]
+load-on-startup=MIDORI_STARTUP_HOMEPAGE
+homepage=http://www.tryphon.eu
+"
+  }
 }
 
 class xfce::default_config {
