@@ -1,3 +1,10 @@
-When /^the user radio starts a "([^"]*)"$/ do |command|
-  current_box.ssh "su -l -c '#{command}' radio"
+When /^the user radio runs command "([^"]*)"$/ do |command|
+  steps "Given a VNC access has been configured"
+  vnc do |vnc|
+    vnc.key_down :alt
+    vnc.key_press :f2
+    vnc.key_up :alt
+    vnc.type command
+    vnc.key_press :return
+  end
 end
