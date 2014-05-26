@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# REMOVEME Migration for ticket #8
 if ! grep VISUAL ~/.xsessionrc; then
-  echo "export VISUAL=gedit" >> ~/.xsessionrc
+    echo "export VISUAL=mousepad" >> ~/.xsessionrc
+else
+    sed -i 's/export VISUAL=gedit/export VISUAL=mousepad/' ~/.xsessionrc
 fi
 
 if [ ! -f ~/.homesync ]; then

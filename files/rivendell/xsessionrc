@@ -1,2 +1,2 @@
-export VISUAL=gedit
+export VISUAL=mousepad
 /usr/local/bin/rivendell-init-radio-home

@@ -4,6 +4,8 @@ class xfce {
   include lightdm
   include xfce::default_config
   include xfce::midori
+
+  package { 'mousepad': }
 }
 
 class xfce::midori {
