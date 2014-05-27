@@ -1,2 +1,7 @@
 export VISUAL=mousepad
 /usr/local/bin/rivendell-init-radio-home
+
+# Start hsdpmixer when a default file is setup
+if grep "^default_file:" ~/.fltk/thomasATundata.org/HDSPMixer.prefs; then
+  hdspmixer -i &
+fi
