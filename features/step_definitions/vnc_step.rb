@@ -26,3 +26,26 @@ Given /^a VNC access has been configured$/ do
     Given the configuration is applied
   }
 end
+
+def vnc_screenshot_name
+  @vnc_screenshot_id ||= 0
+  @vnc_screenshot_id += 1
+  [Time.now.strftime('%Y%m%d-%H%M%S'), @scenario_key, @vnc_screenshot_id].join '-'
+end
+
+Then /^a screenshot should be saved$/ do
+  raise "No known vnc password" unless @vnc_password
+
+  Tempfile.open "vncpassword" do |f|
+    f.close
+    Net::VNC.save_password @vnc_password, f.path
+
+    filename = "tmp/screenshots/#{vnc_screenshot_name}.jpg"
+    FileUtils.mkdir_p File.dirname(filename)
+
+    command = "vncsnapshot -quiet -passwd #{f.path} #{current_box.ip_address}:0 #{filename} > /dev/null 2>&1"
+    if system command
+      puts "Saved #{filename}"
+    end
+  end
+end
