@@ -4,6 +4,7 @@ class xfce {
   include lightdm
   include xfce::default_config
   include xfce::midori
+  include xfce::thunar
 
   package { 'mousepad': }
 }
@@ -33,6 +34,10 @@ class xfce::default_config {
   file { '/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/thunar-volman.xml':
     source => 'puppet:///files/xfce/config/thunar-volman.xml'
   }
+}
+
+class xfce::thunar {
+  package { ['gvfs', 'gvfs-backends']: }
 }
 
 class lightdm {
