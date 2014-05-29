@@ -12,4 +12,4 @@ Feature: Desktop environment
     Given the user radio opens "ftp://localhost/upload" in thunar
     When the user radio creates a new directory "test" in thunar
     Then a directory "/srv/rivendell/ftp/upload/test" should exist
-    And a screenshot should be saved
+    And a screenshot is saved

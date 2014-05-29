@@ -33,7 +33,7 @@ def vnc_screenshot_name
   [Time.now.strftime('%Y%m%d-%H%M%S'), @scenario_key, @vnc_screenshot_id].join '-'
 end
 
-Then /^a screenshot should be saved$/ do
+Then /^a screenshot is saved$/ do
   raise "No known vnc password" unless @vnc_password
 
   Tempfile.open "vncpassword" do |f|
