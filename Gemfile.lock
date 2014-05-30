@@ -27,7 +27,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/system-builder
-  revision: be5ad1399ffa7e9f56716a0fee3bfc367ffdffa6
+  revision: 12668830bc0f207c307ec2fa1a644ba7bd870cda
   specs:
     system-builder (0.0.26)
       qemu
@@ -98,7 +98,7 @@ GEM
       nokogiri (>= 1.2.1)
     mime-types (1.16)
     mimemagic (0.2.1)
-    multi_json (1.10.0)
+    multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     net-scp (1.2.1)
@@ -107,7 +107,7 @@ GEM
     nokogiri (1.5.5)
     null_logger (0.0.1)
     parallel (1.0.0)
-    polyglot (0.3.4)
+    polyglot (0.3.5)
     puppet (2.7.21)
       facter (~> 1.5)
     puppet-lint (0.3.2)
