@@ -92,7 +92,11 @@ class rivendell::common {
   package { 'librivendell':
     require => Apt::Source['tryphon-dev'],
     ensure => $rivendell::release
-   }
+  }
+
+  file { "/etc/security/limits.d/rivendell.conf":
+    source => "puppet:///files/rivendell/rivendell.limits"
+  }
 }
 
 class rivendell::audio {
