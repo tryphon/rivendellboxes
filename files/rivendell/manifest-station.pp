@@ -1,7 +1,7 @@
 class rivendell::station {
   include alsa
   if $rivendell_config == "" and $alsa::device_id == "DSP" {
-    notice("Define default alsa_config for RME HDSP support");
+    notice("Define default alsa_config for RME HDSP support")
     $rivendell_config = { "alsa" => { "period_quantity" => "2" } }
   }
 
