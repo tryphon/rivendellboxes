@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/sh
 
 if [ "$IFACE" != "eth0" ]; then
     exit 0
@@ -12,5 +12,5 @@ fi
 ipaddress=`facter ipaddress`
 echo "Update rivendellnas/$ipaddress in dnsmasq"
 
-echo "address=/rivendellnas/$ipaddress" > /etc/dnsmasq.d/rivendellnas
+echo "host-record=rivendellnas,$ipaddress" > /etc/dnsmasq.d/rivendellnas
 invoke-rc.d dnsmasq restart || true
