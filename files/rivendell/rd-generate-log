@@ -1,0 +1,54 @@
+#!/bin/bash
+
+LOG_TOPIC="rd-generate-log"
+LOG_TOPIC_OUT="$LOG_TOPIC-out[$$]"
+LOG_TOPIC_ERR="$LOG_TOPIC-err[$$]"
+
+exec > >(logger -t "$LOG_TOPIC_OUT")
+exec 2> >(logger -t "$LOG_TOPIC_ERR" )
+
+SERVICE="Production"
+DAY=0
+
+while getopts "sdg" option; do
+    case $option in
+        g)
+        # ignore -g option .. we always generate log
+        ;;
+        s)
+            SERVICE=$OPTARG
+        ;;
+        d)
+            DAY=$OPTARG
+        ;;
+        \?)
+        echo "Invalid option: -$OPTARG" >&2
+        ;;
+  esac
+done
+
+LOCK_DIR="/tmp"
+# On RivendellAirBoxes, try to use a shared directory
+[ -d "/nfs/tmp" ] && LOCK_DIR="/nfs/tmp"
+
+LOCK_FILE="$LOCK_DIR/rdlogmanager.lock"
+echo "Acquire lock ($LOCK_FILE)"
+
+if ! dotlockfile -p -r 10 $LOCK_FILE; then
+    echo "Can't acquire lock ($LOCK_FILE)" >&2
+    exit 100
+fi
+
+echo "Generate log for $SERVICE, day $DAY"
+
+rdlogmanager -g -s $SERVICE -d $DAY
+error_code=$?
+
+if [ $error_code != 0 ]; then
+    echo "rdlogmanager returns error code : $error_code" >&2
+    exit $error_code
+fi
+
+echo "End of log generation for $SERVICE, day $DAY"
+
+dotlockfile -u $LOCK_FILE

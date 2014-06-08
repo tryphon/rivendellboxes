@@ -80,6 +80,8 @@ class rivendell::station {
   file { "/etc/puppet/templates/rivendell/rd.conf":
     source => "puppet:///files/puppet/templates/rd.conf"
   }
+
+  include rivendell::rd_generate_log
 }
 
 class rivendell::common {
@@ -400,5 +402,13 @@ class rivendell::box::all {
 
   file { "/etc/puppet/manifests/classes/rivendell-box-all.pp":
     source => "puppet:///files/rivendell/manifest-box-all.pp"
+  }
+}
+
+class rivendell::rd_generate_log {
+  package { 'liblockfile-bin': }
+
+  file { "/usr/local/bin/rd-generate-log":
+    source => "puppet:///files/rivendell/rd-generate-log"
   }
 }
