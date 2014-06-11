@@ -13,6 +13,8 @@ class rivendell::station {
   include xfce
   include vnc::server
 
+  include alsa::hdsp
+
   package { rivendell:
     require => [Apt::Source['tryphon-dev'], Package['librivendell']],
     ensure => $rivendell::release
