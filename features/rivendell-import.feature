@@ -15,7 +15,6 @@ Feature: Rivendell Import
     And all rivendell import tasks are completed
     Then a cart "Test title" should exist in group "MUSIC"
 
-  @wip
   Scenario: Import a file without title
     Given the rivendell import is configured with
      """
