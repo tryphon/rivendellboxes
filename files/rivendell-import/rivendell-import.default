@@ -1,4 +1,4 @@
-DATABASE='mysql://import:import@localhost/import'
+DATABASE='mysql://import:import@localhost/import?reconnect=true'
 CONFIG=/srv/rivendell/ftp/dropboxes/config.rb
 DIRECTORY=/srv/rivendell/ftp/dropboxes
 
