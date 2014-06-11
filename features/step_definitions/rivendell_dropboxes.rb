@@ -16,13 +16,13 @@ def create_sound_file(attributes = {}, &block)
   end
 end
 
-When /^a sound file is dropped into "([^"]*)" with title "([^"]*)"$/ do |dropbox_file, title|
+When /^a sound file is dropped into "([^"]*)"(?: with title "([^"]*)")?$/ do |dropbox_file, title|
   dropbox_file = Pathname.new(dropbox_file)
 
   attributes = {
-    :title => title,
     :format => 'mp3'
   }
+  attributes[:title] = title if title
 
   create_sound_file(attributes) do |file|
     current_box.ftp do |ftp|
