@@ -3,7 +3,8 @@
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 backup_dir=${BACKUP_DIR:-/srv/rivendell/backup}
-backup_file=`date +$backup_dir/database-%Y%m%d-%H%M.sql`
+working_file="$backup_dir/last-dump"
+backup_file="$backup_dir/database-`date +%Y%m%d-%H%M`.sql"
 shelf_life=7
 
 # Code from http://ajdiaz.wordpress.com/2008/02/09/bash-ini-parser/
@@ -31,6 +32,12 @@ function cfg_parser() {
 cfg_parser '/etc/rd.conf'
 cfg.section.mySQL
 
-mysqldump --opt --single-transaction -u $Loginname -p$Password $Database > $backup_file
-find $backup_dir -mtime +$shelf_life -name "database-*.sql" | xargs -r rm 
+mysqldump --opt --single-transaction -u $Loginname -p$Password $Database > $working_file
+if [ $? == 0 ]; then
+    mv $working_file $backup_file
+else
+    echo "mysqldump failed"
+fi
 
+keep_releases=15
+ls -r $backup_dir/database-*.sql | tail -n +$keep_releases | xargs -r rm
