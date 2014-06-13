@@ -408,8 +408,6 @@ class rivendell::box::all {
 }
 
 class rivendell::rd_generate_log {
-  package { 'liblockfile-bin': }
-
   file { "/usr/local/bin/rd-generate-log":
     source => "puppet:///files/rivendell/rd-generate-log"
   }

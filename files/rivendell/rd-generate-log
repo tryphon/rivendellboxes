@@ -34,21 +34,21 @@ LOCK_DIR="/tmp"
 LOCK_FILE="$LOCK_DIR/rdlogmanager.lock"
 echo "Acquire lock ($LOCK_FILE)"
 
-if ! dotlockfile -p -r 10 $LOCK_FILE; then
-    echo "Can't acquire lock ($LOCK_FILE)" >&2
-    exit 100
-fi
+(
+    if ! flock -n 9; then
+        echo "Can't acquire lock ($LOCK_FILE)" >&2
+        exit 100
+    fi
 
-echo "Generate log for $SERVICE, day $DAY"
+    echo "Generate log for $SERVICE, day $DAY"
 
-rdlogmanager -g -s $SERVICE -d $DAY
-error_code=$?
+    rdlogmanager -g -s $SERVICE -d $DAY
+    error_code=$?
 
-if [ $error_code != 0 ]; then
-    echo "rdlogmanager returns error code : $error_code" >&2
-    exit $error_code
-fi
+    if [ $error_code != 0 ]; then
+        echo "rdlogmanager returns error code : $error_code" >&2
+        exit $error_code
+    fi
 
-echo "End of log generation for $SERVICE, day $DAY"
-
-dotlockfile -u $LOCK_FILE
+    echo "End of log generation for $SERVICE, day $DAY"
+) 9> $LOCK_FILE
