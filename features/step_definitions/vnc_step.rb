@@ -1,9 +1,18 @@
 require "net/vnc"
 
 def vnc(options = {}, &block)
+  timeout = options.delete(:timeout) || 20
   options = { :shared => true, :password => @vnc_password }.merge(options)
-  Net::VNC.open "#{current_box.ip_address}:0", options do |vnc|
+
+  vnc = nil
+  wait_for(timeout) do
+    vnc = Net::VNC.new "#{current_box.ip_address}:0", options
+  end
+
+  begin
     yield vnc
+  ensure
+    vnc.close
   end
 end
 

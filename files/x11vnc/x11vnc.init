@@ -14,7 +14,7 @@ DESC="VNC shared screen"
 
 PASSWORD_FILE="/etc/x11vnc/password"
 PID_FILE="/var/run/$NAME.pid"
-DAEMON_OPTS="-auth /var/run/lightdm/root/:0 -display :0 -forever -shared -o /var/log/x11vnc.log -passwdfile $PASSWORD_FILE"
+DAEMON_OPTS="-auth /var/run/lightdm/root/:0 -display :0 -forever -loop -shared -o /var/log/x11vnc.log -passwdfile $PASSWORD_FILE"
 
 test -x $DAEMON || exit 0
 
@@ -32,7 +32,7 @@ start_daemon() {
 }
 
 stop_daemon() {
-	  start-stop-daemon --stop --quiet --pidfile $PID_FILE
+	  start-stop-daemon --stop --quiet --oknodo --exec $DAEMON
 }
 
 case "$1" in
