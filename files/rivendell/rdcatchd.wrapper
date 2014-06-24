@@ -1,0 +1,8 @@
+#!/bin/sh
+logger -i -t rdcatchd "Use wrapper"
+
+if [ -d "/nfs/tmp" ]; then
+    logger -i -t rdcatchd "Use /nfs/tmp for TEMP/TMPDIR"
+    export TEMP=/nfs/tmp TMPDIR=/nfs/tmp
+fi
+exec /usr/bin/rdcatchd

@@ -84,6 +84,11 @@ class rivendell::station {
   }
 
   include rivendell::rd_generate_log
+
+  file { '/usr/local/bin/rdcatchd':
+    source => 'puppet:///files/rivendell/rdcatchd.wrapper',
+    mode => 0755
+  }
 }
 
 class rivendell::common {
@@ -348,12 +353,6 @@ class rivendell::station::nfs {
 
   file { ["/nfs", "/nfs/dropboxes", "/nfs/tmp"]:
     ensure => directory
-  }
-
-  # rdcatchd daemon need place to create cut or export files (#9)
-  file { "/etc/default/rivendell":
-    content => "export TEMP=/nfs/tmp TMPDIR=/nfs/tmp\nRUN_MODE=init.d\n",
-    require => Package[rivendell]
   }
 }
 

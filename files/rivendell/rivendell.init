@@ -50,7 +50,10 @@ fi
 function start() {
     echo -n "Starting $LABEL:"
     for daemon in $DAEMONS; do
-	      start-stop-daemon --start --oknodo --chuid $DAEMON_USER --exec "/usr/bin/$daemon" --quiet
+        daemon_binary="/usr/bin/$daemon"
+        test -x /usr/local/bin/$daemon && daemon_binary="/usr/local/bin/$daemon"
+
+	      start-stop-daemon --start --oknodo --chuid $DAEMON_USER --exec $daemon_binary --quiet
 	      echo -n " $daemon"
     done
     echo "."
@@ -76,7 +79,7 @@ case "$1" in
     fi
 
     for daemon in $DAEMONS; do
-        test -x /usr/bin/$daemon || exit 0
+        test -x /usr/bin/$daemon || test -x /usr/local/bin/$daemon || exit 0
     done
 
     start

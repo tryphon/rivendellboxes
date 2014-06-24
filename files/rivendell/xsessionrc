@@ -1,4 +1,10 @@
 export VISUAL=mousepad
+
+# add /usr/local/bin in path to use rdcatchd wrapper
+if ! echo $PATH | grep -q "^/usr/local/bin"; then
+  export PATH=/usr/local/bin:$PATH
+fi
+
 /usr/local/bin/rivendell-init-radio-home
 
 # Start hsdpmixer when a default file is setup
