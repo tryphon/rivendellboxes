@@ -13,6 +13,8 @@ Given /^the rivendell import is configured with$/ do |config|
 end
 
 When /^all rivendell import tasks are completed$/ do
+  tasks = RivendellImport.instance.tasks
+
   tasks = []
   begin
     wait_for do
@@ -21,6 +23,12 @@ When /^all rivendell import tasks are completed$/ do
     end
   rescue => e
     raise "Remaining tasks #{tasks.parsed_response.inspect}"
+  end
+end
+
+When /^the rivendell import web interface should be available$/ do
+  wait_for do
+    Net::HTTP.get(URI("http://#{current_box.ip_address}:4567/tasks"))
   end
 end
 

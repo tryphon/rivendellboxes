@@ -28,3 +28,11 @@ Feature: Rivendell Import
     When a sound file is dropped into "test.wav"
     And all rivendell import tasks are completed
     Then a cart "test" should exist in group "TEMP"
+
+  Scenario: Restart the rivendell import process
+    When the service "rivendell-import" is restarted
+    Then the rivendell import web interface should be available
+
+  Scenario: Support mysql reconnection
+    When the service "mysql" is restarted
+    Then the rivendell import web interface should be available
