@@ -50,7 +50,7 @@ case "$1" in
     restart|force-reload)
 	      log_begin_msg "Restarting $DESC"
 	      stop_daemon
-	      sleep 1
+	      sleep 5
 	      start_daemon
 	      log_end_msg 0
 	      ;;
