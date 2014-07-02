@@ -84,6 +84,7 @@ class rivendell::station {
   }
 
   include rivendell::rd_generate_log
+  include rivendell::metalive
 
   file { '/usr/local/bin/rdcatchd':
     source => 'puppet:///files/rivendell/rdcatchd.wrapper',
@@ -410,4 +411,8 @@ class rivendell::rd_generate_log {
   file { "/usr/local/bin/rd-generate-log":
     source => "puppet:///files/rivendell/rd-generate-log"
   }
+}
+
+class rivendell::metalive {
+  include curl
 }
