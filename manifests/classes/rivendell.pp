@@ -195,6 +195,8 @@ class rivendell::server {
   include mysql::server
   include ftp::server
 
+  include sox
+
   include rivendell::import
   include rivendellcontrol
 
