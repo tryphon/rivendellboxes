@@ -65,4 +65,6 @@ RivendellControl::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  config.secret_token = "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
 end

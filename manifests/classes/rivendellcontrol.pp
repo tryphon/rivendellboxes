@@ -5,15 +5,15 @@ class rivendellcontrol {
   include apt::tryphon::dev
 
   file { "/etc/rivendellcontrol/database.yml":
-    source => "$source_base/files/rivendellcontrol/database.yml",
+    source => "puppet:///files/rivendellcontrol/database.yml",
     require => Package[rivendellcontrol]
   }
   file { "/etc/rivendellcontrol/production.rb":
-    source => "$source_base/files/rivendellcontrol/production.rb",
+    source => "puppet:///files/rivendellcontrol/production.rb",
     require => Package[rivendellcontrol]
   }
   package { rivendellcontrol:
-    ensure => "latest",
+    ensure => "0.2-1+build19",
     require => [Apt::Source[tryphon-dev], Package[libapache2-mod-passenger], Package["ruby1.9.1"]]
   }
 
