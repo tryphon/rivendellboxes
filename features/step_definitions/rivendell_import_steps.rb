@@ -13,8 +13,6 @@ Given /^the rivendell import is configured with$/ do |config|
 end
 
 When /^all rivendell import tasks are completed$/ do
-  tasks = RivendellImport.instance.tasks
-
   tasks = []
   begin
     wait_for do
