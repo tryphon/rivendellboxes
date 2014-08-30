@@ -157,6 +157,7 @@ DEPENDENCIES
   capybara-mechanize!
   cucumber
   net-ssh
+  puppet (~> 2.7.21)
   puppet-lint
   puppet-syntax
   qemu!
