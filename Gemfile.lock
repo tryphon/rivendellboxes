@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/ruby-qemu
-  revision: f22b64b1fcccc7ccb9de1905402ffa209548301b
+  revision: 25b3d4afba8a0c881821c08e0ce1faf1b172ce9a
   specs:
     qemu (0.4)
       daemons
