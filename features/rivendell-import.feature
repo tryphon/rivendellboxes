@@ -29,6 +29,21 @@ Feature: Rivendell Import
     And all rivendell import tasks are completed
     Then a cart "test" should exist in group "TEMP"
 
+  Scenario: Import Ogg/Vorbis file
+    Given the rivendell import is configured with
+     """
+     Rivendell::Import.config do |config|
+       config.to_prepare do |file|
+         file.in('music') do
+          cart.group = 'MUSIC'
+         end
+       end
+     end
+     """
+    When a sound file is dropped into "music/artist/album/file.ogg" with title "Test title"
+    And all rivendell import tasks are completed
+    Then a cart "Test title" should exist in group "MUSIC"
+
   Scenario: Restart the rivendell import process
     When the service "rivendell-import" is restarted
     Then the rivendell import web interface should be available

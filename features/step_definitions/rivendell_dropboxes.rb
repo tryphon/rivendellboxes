@@ -20,7 +20,7 @@ When /^a sound file is dropped into "([^"]*)"(?: with title "([^"]*)")?$/ do |dr
   dropbox_file = Pathname.new(dropbox_file)
 
   attributes = {
-    :format => 'mp3'
+    :format => File.extname(dropbox_file)[1..-1]
   }
   attributes[:title] = title if title
 
