@@ -147,7 +147,7 @@ GEM
       cocaine (= 0.2.1)
       json
       parallel
-    taglib-ruby (0.7.0)
+    taglib-ruby (0.4.0)
     treetop (1.5.3)
       polyglot (~> 0.3)
     trollop (2.0)
@@ -173,6 +173,6 @@ DEPENDENCIES
   ruby-vnc!
   sshkey
   system-builder!
-  taglib-ruby
+  taglib-ruby (= 0.4.0)
   tryphon-box!
   tryphon-vmbox!
