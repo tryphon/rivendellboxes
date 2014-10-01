@@ -280,23 +280,23 @@ class rivendell::server {
 }
 
 class rivendell::import {
-  ruby::gem { "rivendell-import":
-    require => [Package[libsqlite3-dev], Ruby::Gem[mysql]],
-    ensure => "0.9"
+  ruby::gem { 'rivendell-import':
+    require => [Package['libsqlite3-dev'], Ruby::Gem['mysql']],
+    ensure => '0.10'
   }
   ruby::gem { mysql:
     require => Package[libmysqlclient-dev]
   }
 
-  package { [libsqlite3-dev, libmysqlclient-dev]: }
-  ruby::gem { rb-inotify: ensure => "0.9.0" }
+  package { ['libsqlite3-dev', 'libmysqlclient-dev', 'libtag1-dev']: }
+  ruby::gem { rb-inotify: ensure => '0.9.0' }
 
-  file { "/etc/default/rivendell-import":
-    source => "puppet:///files/rivendell-import/rivendell-import.default"
+  file { '/etc/default/rivendell-import':
+    source => 'puppet:///files/rivendell-import/rivendell-import.default'
   }
 
-  file { "/etc/init.d/rivendell-import":
-    source => "puppet:///files/rivendell-import/rivendell-import.init",
+  file { '/etc/init.d/rivendell-import':
+    source => 'puppet:///files/rivendell-import/rivendell-import.init',
     mode => 755
   }
 
@@ -304,17 +304,17 @@ class rivendell::import {
     require => Initd_Script['rivendell-db']
   }
 
-  file { "/etc/puppet/manifests/classes/rivendell-import.pp":
-    source => "puppet:///files/rivendell-import/manifest.pp"
+  file { '/etc/puppet/manifests/classes/rivendell-import.pp':
+    source => 'puppet:///files/rivendell-import/manifest.pp'
   }
-  file { "/etc/puppet/files/rivendell-import":
+  file { '/etc/puppet/files/rivendell-import':
     ensure => directory
   }
-  file { "/etc/puppet/files/rivendell-import/config.rb":
-    source => "puppet:///files/rivendell-import/config.rb"
+  file { '/etc/puppet/files/rivendell-import/config.rb':
+    source => 'puppet:///files/rivendell-import/config.rb'
   }
-  steto::conf { "rivendell-import":
-    source => "puppet:///files/rivendell-import/steto.rb"
+  steto::conf { 'rivendell-import':
+    source => 'puppet:///files/rivendell-import/steto.rb'
   }
 }
 
