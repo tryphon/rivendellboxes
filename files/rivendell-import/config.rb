@@ -21,5 +21,5 @@ Rivendell::Import.config do |config|
   end
 
   # Enable direct database access
-  config.db_url = 'mysql://rduser:letmein@localhost/Rivendell?reconnect=true'
+  config.rivendell.db_url = 'mysql://rduser:letmein@localhost/Rivendell?reconnect=true'
 end
