@@ -9,3 +9,15 @@ class nfs::common {
 
   readonly::mount_tmpfs { "/var/lib/nfs": }
 }
+
+class nfs::client {
+  include nfs::common
+  file { "/etc/default/nfs-common":
+    source => "puppet:///files/nfs/client/nfs-common.default",
+  }
+}
+
+class nfs::server {
+  include nfs::common
+  package { [nfs-kernel-server, portmap]: }
+}

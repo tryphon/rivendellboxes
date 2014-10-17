@@ -323,9 +323,7 @@ class rivendell::storage {
 }
 
 class rivendell::nfs {
-  include nfs::common
-
-  package { [nfs-kernel-server, portmap]: }
+  include nfs::server
 
   file { "/etc/exports":
     source => "puppet:///files/nfs/exports"
@@ -333,7 +331,7 @@ class rivendell::nfs {
 }
 
 class rivendell::station::nfs {
-  include nfs::common
+  include nfs::client
 
   file { "/var/snd":
    ensure => directory
