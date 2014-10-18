@@ -7,6 +7,19 @@ class nfs::common {
     mode => 775
   }
 
+  exec { 'create-nfs-model':
+    command => 'mv /var/lib/nfs /var/lib/nfs.model',
+    creates => '/var/lib/nfs.model',
+    require => Package['nfs-common']
+  }
+  file { '/var/lib/nfs':
+    ensure => directory,
+    require => Exec['create-nfs-model']
+  }
+  file { '/etc/puppet/manifests/classes/nfs-common.pp':
+    source => 'puppet:///files/nfs/manifest.pp'
+  }
+
   readonly::mount_tmpfs { "/var/lib/nfs": }
 }
 
@@ -19,5 +32,7 @@ class nfs::client {
 
 class nfs::server {
   include nfs::common
-  package { [nfs-kernel-server, portmap]: }
+  package { 'nfs-kernel-server':
+    before => Exec['create-nfs-model']
+  }
 }
