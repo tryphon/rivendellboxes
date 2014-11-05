@@ -51,7 +51,7 @@ namespace :rivendellboxes do
     end
   end
 
-  namespace :buildbot do
+  namespace :ci do
     task :dist do
       target_directory = (ENV['DIST'] or "#{ENV['HOME']}/dist/rivendellboxes")
       mkdir_p target_directory
@@ -61,7 +61,7 @@ namespace :rivendellboxes do
     end
   end
 
-  desc "Tag and publish latest buildbot RivendellAir&NasBoxes release"
+  desc "Tag and publish latest ci RivendellAir&NasBoxes release"
   task :release do
     SystemBuilder::Publisher.new("rivendellboxes").publish
   end
