@@ -40,15 +40,6 @@ class rivendell::station {
   include rivendell::common
   include mount
 
-  file { "/usr/share/rivendell/rdairplay_fr.qm":
-    source => "puppet:///files/rivendell/fr/rdairplay_fr.qm",
-    require => Package[rivendell]
-  }
-  file { "/usr/share/rivendell/librd_fr.qm":
-    source => "puppet:///files/rivendell/fr/librd_fr.qm",
-    require => Package[rivendell]
-  }
-
   include rivendell::mpeg
   include rivendell::station::user
 
