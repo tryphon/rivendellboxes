@@ -42,12 +42,37 @@ namespace :rivendellboxes do
     YAML.load(IO.read("dist/rivendellairbox/latest.yml"))["name"].scan(/box-([0-9-]+)$/).join
   end
 
+  class RivendellBoxes
+
+    def release_name
+      "rivendellboxes-#{release_number}"
+    end
+
+    def release_filename
+      release_name
+    end
+
+    def release_number
+      @release_number ||=
+        YAML.load(IO.read("dist/rivendellairbox/latest.yml"))["name"].scan(/box-([0-9-]+)$/).join
+    end
+
+    def upgrade_file
+      "dist/rivendellboxes/upgrade.tar"
+    end
+
+    def latest_file
+      SystemBuilder::LatestFile.new(self)
+    end
+
+  end
+
   namespace :dist do
     desc "Create joined upgrade files for RivendellNas/AirBoxes"
     task :upgrade do
       mkdir_p "dist/rivendellboxes"
       sh "tar -cf dist/rivendellboxes/upgrade.tar -C dist rivendellairbox/latest.yml rivendellairbox/upgrade.tar rivendellnasbox/latest.yml rivendellnasbox/upgrade.tar"
-      SystemBuilder::LatestFile.new(:name => "rivendellboxes", :release_number => latest_release_number, :upgrade_file => "dist/rivendellboxes/upgrade.tar").create("dist/rivendellboxes/latest.yml")
+      RivendellBoxes.new.latest_file.create("dist/rivendellboxes/latest.yml")
     end
   end
 
