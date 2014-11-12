@@ -184,7 +184,9 @@ class rivendell::server {
   include rivendell::storage
   include rivendell::nfs
 
-  include mysql::server
+  class { 'mysql::server':
+    storage_name => 'rivendell'
+  }
   include ftp::server
 
   include sox
@@ -310,7 +312,9 @@ class rivendell::import {
 }
 
 class rivendell::storage {
-  include box::storage
+  class { 'box::storage':
+    storage_name => "rivendell",
+  }
 }
 
 class rivendell::nfs {

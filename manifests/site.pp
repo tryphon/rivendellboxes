@@ -15,8 +15,6 @@ include apache::dnssd
 
 include ftp::client
 
-$box_storage_name="rivendell"
-
 case $box_name {
   'rivendellallbox':  { include rivendell::box::all }
   'rivendellnasbox':  { include rivendell::box::nas }
