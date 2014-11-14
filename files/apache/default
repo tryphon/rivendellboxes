@@ -8,7 +8,6 @@
   PassengerDefaultUser www-data
   PassengerMaxPoolSize 3
   PassengerMaxRequests 1000
-  PassengerLogLevel 3
   PassengerRuby /usr/bin/ruby1.9.1
   <Directory /usr/share/rivendellcontrol/public>
      AllowOverride None
