@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.5.37, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.39, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: Rivendell
+-- Host: rivendellallbox.local    Database: Rivendell
 -- ------------------------------------------------------
 -- Server version	5.5.37-0+wheezy1
 
@@ -710,6 +710,7 @@ CREATE TABLE `EVENTS` (
   `SCHED_GROUP` varchar(10) DEFAULT NULL,
   `TITLE_SEP` int(10) unsigned DEFAULT NULL,
   `HAVE_CODE` varchar(10) DEFAULT NULL,
+  `HAVE_CODE2` varchar(10) DEFAULT NULL,
   `HOR_SEP` int(10) unsigned DEFAULT NULL,
   `HOR_DIST` int(10) unsigned DEFAULT NULL,
   `NESTED_EVENT` char(64) DEFAULT NULL,
@@ -891,6 +892,35 @@ CREATE TABLE `FEED_PERMS` (
 LOCK TABLES `FEED_PERMS` WRITE;
 /*!40000 ALTER TABLE `FEED_PERMS` DISABLE KEYS */;
 /*!40000 ALTER TABLE `FEED_PERMS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `GPIO_EVENTS`
+--
+
+DROP TABLE IF EXISTS `GPIO_EVENTS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `GPIO_EVENTS` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `STATION_NAME` char(64) NOT NULL,
+  `MATRIX` int(11) NOT NULL,
+  `NUMBER` int(11) NOT NULL,
+  `TYPE` int(11) NOT NULL,
+  `EDGE` int(11) NOT NULL,
+  `EVENT_DATETIME` datetime NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `STATION_NAME_IDX` (`STATION_NAME`,`MATRIX`,`TYPE`,`EVENT_DATETIME`,`EDGE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `GPIO_EVENTS`
+--
+
+LOCK TABLES `GPIO_EVENTS` WRITE;
+/*!40000 ALTER TABLE `GPIO_EVENTS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `GPIO_EVENTS` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2076,7 +2106,9 @@ CREATE TABLE `REPORTS` (
   `DESCRIPTION` char(64) DEFAULT NULL,
   `EXPORT_FILTER` int(11) DEFAULT NULL,
   `EXPORT_PATH` char(255) DEFAULT NULL,
+  `POST_EXPORT_CMD` text,
   `WIN_EXPORT_PATH` char(255) DEFAULT NULL,
+  `WIN_POST_EXPORT_CMD` text,
   `EXPORT_TFC` enum('N','Y') DEFAULT 'N',
   `FORCE_TFC` enum('N','Y') DEFAULT 'N',
   `EXPORT_MUS` enum('N','Y') DEFAULT 'N',
@@ -2874,7 +2906,7 @@ CREATE TABLE `VERSION` (
 
 LOCK TABLES `VERSION` WRITE;
 /*!40000 ALTER TABLE `VERSION` DISABLE KEYS */;
-INSERT INTO `VERSION` VALUES (239,'1970-01-01 00:00:00','1970-01-01 00:00:00');
+INSERT INTO `VERSION` VALUES (242,'1970-01-01 00:00:00','1970-01-01 00:00:00');
 /*!40000 ALTER TABLE `VERSION` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2944,4 +2976,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-15 20:44:27
+-- Dump completed on 2014-11-17 11:21:54
