@@ -200,6 +200,10 @@ class rivendell::server {
   }
   include rivendell::common
 
+  apache::confd { 'increase-timeout':
+    source => 'puppet:///files/rivendell/apache-timeout.conf'
+  }
+
   include rivendell::user
 
   file { "/etc/puppet/manifests/classes/rivendell-server.pp":
