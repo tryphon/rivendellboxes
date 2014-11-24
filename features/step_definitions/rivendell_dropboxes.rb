@@ -2,8 +2,9 @@ require 'pathname'
 require 'taglib'
 
 def create_sound_file(attributes = {}, &block)
+  length = attributes.fetch(:length, "3:00")
   Tempfile.open(["sound_file", ".#{attributes[:format]}"]) do |file|
-    system "sox -n -b 16 -r 48000 -c 2 -t #{attributes[:format]} #{file.path} synth 3:00 sine 1000 fade q 10 3:00 10" or raise "Can't create sound file"
+    system "sox -n -b 16 -r 48000 -c 2 -t #{attributes[:format]} #{file.path} synth #{length} sine 1000 fade q 10 #{length} 10" or raise "Can't create sound file"
 
     TagLib::FileRef.open(file.path) do |fileref|
       tag = fileref.tag
@@ -16,13 +17,12 @@ def create_sound_file(attributes = {}, &block)
   end
 end
 
-When /^a sound file is dropped into "([^"]*)"(?: with title "([^"]*)")?$/ do |dropbox_file, title|
+def drop_sound_file(dropbox_file, attributes = {})
   dropbox_file = Pathname.new(dropbox_file)
 
-  attributes = {
+  attributes = attributes.merge({
     :format => File.extname(dropbox_file)[1..-1]
-  }
-  attributes[:title] = title if title
+  })
 
   create_sound_file(attributes) do |file|
     current_box.ftp do |ftp|
@@ -40,4 +40,16 @@ When /^a sound file is dropped into "([^"]*)"(?: with title "([^"]*)")?$/ do |dr
       ftp.putbinaryfile file, ftp_file.to_s
     end
   end
+end
+
+When /^a sound file is dropped into "([^"]*)"$/ do |dropbox_file|
+  drop_sound_file dropbox_file
+end
+
+When /^a sound file is dropped into "([^"]*)" with attributes:$/ do |dropbox_file, table|
+  attributes = table.raw.each_with_object({}) do |pair, attributes|
+    attribute, value = pair
+    attributes[attribute.to_sym] = value
+  end
+  drop_sound_file dropbox_file, attributes
 end

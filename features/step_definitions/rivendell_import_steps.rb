@@ -12,10 +12,11 @@ Given /^the rivendell import is configured with$/ do |config|
   end
 end
 
-When /^all rivendell import tasks are completed$/ do
+When /^all rivendell import tasks are completed( without timeout)?$/ do |without_timeout|
   tasks = []
+  without_timeout = without_timeout.present?
   begin
-    wait_for do
+    wait_for(without_timeout ? 1200 : 60) do
       tasks = HTTParty.get("http://#{current_box.ip_address}:4567/tasks.json", :format => :json)
       not tasks.empty? and tasks.all? { |t| t['status'] == 'completed' }
     end
