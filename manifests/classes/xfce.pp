@@ -34,6 +34,9 @@ class xfce::default_config {
   file { '/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/thunar-volman.xml':
     source => 'puppet:///files/xfce/config/thunar-volman.xml'
   }
+  file { '/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml':
+    source => 'puppet:///files/xfce/config/xfce4-panel.xml'
+  }
 }
 
 class xfce::thunar {
