@@ -17,6 +17,7 @@ SystemBuilder::BoxTasks.new(:rivendellallbox) do |box|
   box.disk_image do |image|
     image.kernel_options = kernel_options
   end
+  box.vmbox.memory = 1024
 end
 
 SystemBuilder::BoxTasks.new(:rivendellnasbox) do |box|

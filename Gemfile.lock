@@ -35,7 +35,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/vmbox
-  revision: 0436a496744aa8dbb11fa6952eac06084547a0da
+  revision: fa5dda5d68ad8e35e16138f93f4b049f02f67914
   specs:
     tryphon-vmbox (0.0.1)
       activesupport (~> 3.2.1)
