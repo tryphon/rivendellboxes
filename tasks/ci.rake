@@ -1,3 +1,5 @@
+ENV['BOX_RELEASE_NUMBER'] ||= SystemBuilder::Box.default_release_number
+
 boxes = %w{rivendellallbox rivendellnasbox rivendellairbox}
 
 desc "Run continuous integration tasks (spec, ...)"

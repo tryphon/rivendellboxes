@@ -1,9 +1,5 @@
 namespace :rivendellboxes do
 
-  def latest_release_number
-    YAML.load(IO.read("dist/rivendellairbox/latest.yml"))["name"].scan(/box-([0-9-]+)$/).join
-  end
-
   class RivendellBoxes
 
     def release_name
@@ -15,8 +11,7 @@ namespace :rivendellboxes do
     end
 
     def release_number
-      @release_number ||=
-        YAML.load(IO.read("dist/rivendellairbox/latest.yml"))["name"].scan(/box-([0-9-]+)$/).join
+      @release_number ||= YAML.load(IO.read("dist/rivendellairbox/latest.yml"))["name"].scan(/box-([0-9-]+)$/).join
     end
 
     def upgrade_file
@@ -29,12 +24,16 @@ namespace :rivendellboxes do
 
   end
 
+  def rivendell_boxes
+    @rivendell_boxes ||= RivendellBoxes.new
+  end
+
   namespace :dist do
     desc "Create joined upgrade files for RivendellNas/AirBoxes"
     task :upgrade do
       mkdir_p "dist/rivendellboxes"
       sh "tar -cf dist/rivendellboxes/upgrade.tar -C dist rivendellairbox/latest.yml rivendellairbox/upgrade.tar rivendellnasbox/latest.yml rivendellnasbox/upgrade.tar"
-      RivendellBoxes.new.latest_file.create("dist/rivendellboxes/latest.yml")
+      rivendell_boxes.latest_file.create("dist/rivendellboxes/latest.yml")
     end
   end
 
@@ -42,9 +41,9 @@ namespace :rivendellboxes do
     task :dist do
       target_directory = (ENV['DIST'] or "#{ENV['HOME']}/dist/rivendellboxes")
       mkdir_p target_directory
-      cp "dist/rivendellboxes/upgrade.tar", "#{target_directory}/rivendellboxes-#{latest_release_number}.tar"
-      cp "dist/rivendellboxes/latest.yml", "#{target_directory}/rivendellboxes-#{latest_release_number}.yml"
-      ln_sf "#{target_directory}/rivendellboxes-#{latest_release_number}.yml", "#{target_directory}/latest.yml"
+      cp "dist/rivendellboxes/upgrade.tar", "#{target_directory}/#{rivendell_boxes.release_filename}.tar"
+      cp "dist/rivendellboxes/latest.yml", "#{target_directory}/#{rivendell_boxes.release_filename}.yml"
+      ln_sf "#{target_directory}/#{rivendell_boxes.release_filename}.yml", "#{target_directory}/latest.yml"
     end
   end
 

@@ -27,7 +27,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/system-builder
-  revision: 94cf7aff4c69a9129464a901e9e27568be2052c5
+  revision: 0a7e75dc166c8e6ab840138ccff83647ac003295
   specs:
     system-builder (0.0.26)
       qemu
@@ -92,8 +92,8 @@ GEM
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    i18n (0.6.11)
-    json (1.8.1)
+    i18n (0.7.0)
+    json (1.8.2)
     mechanize (1.0.0)
       nokogiri (>= 1.2.1)
     mime-types (2.3)
@@ -105,7 +105,7 @@ GEM
     multipart-post (2.0.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-ssh (2.9.1)
+    net-ssh (2.9.2)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     null_logger (0.0.1)
@@ -150,7 +150,7 @@ GEM
     taglib-ruby (0.4.0)
     treetop (1.5.3)
       polyglot (~> 0.3)
-    trollop (2.0)
+    trollop (2.1.1)
     websocket (1.2.1)
     xpath (0.1.4)
       nokogiri (~> 1.3)
