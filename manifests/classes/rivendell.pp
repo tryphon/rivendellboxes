@@ -279,7 +279,7 @@ class rivendell::server {
 class rivendell::import {
   ruby::gem { 'rivendell-import':
     require => [Package['libsqlite3-dev'], Ruby::Gem['mysql']],
-    ensure => '0.10'
+    ensure => '1.01'
   }
   ruby::gem { mysql:
     require => Package[libmysqlclient-dev]
