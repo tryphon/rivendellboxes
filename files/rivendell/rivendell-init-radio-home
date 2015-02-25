@@ -7,7 +7,8 @@ else
 fi
 
 if [ ! -f ~/.homesync ]; then
-  rsync -a /etc/skel/ ~/ && touch ~/.homesync
+    rsync -a /etc/skel/ ~/
+    touch ~/.homesync
 fi
 
 # Remove .rdairplaylock lock (#649)
