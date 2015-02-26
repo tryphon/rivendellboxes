@@ -414,5 +414,5 @@ class rivendell::rd_generate_log {
 }
 
 class rivendell::metalive {
-  include curl
+  package { 'rivendell-metalive': }
 }
