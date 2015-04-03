@@ -13,7 +13,7 @@ class rivendellcontrol {
     require => Package[rivendellcontrol]
   }
   package { rivendellcontrol:
-    ensure => "0.2-1+build19",
+    ensure => "0.2-1+build21",
     require => [Apt::Source[tryphon-dev], Package[libapache2-mod-passenger], Package["ruby1.9.1"]]
   }
 
