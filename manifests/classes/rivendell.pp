@@ -1,5 +1,5 @@
 class rivendell {
-  $release = "2.10.1-2"
+  $release = "2.10.3-1"
 }
 
 # Used in rivendellairbox AND rivendellallbox
