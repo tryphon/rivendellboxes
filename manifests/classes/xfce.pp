@@ -5,6 +5,7 @@ class xfce {
   include xfce::default_config
   include xfce::midori
   include xfce::thunar
+  include xfce::screenshooter
 
   package { 'mousepad': }
 }
@@ -37,6 +38,10 @@ class xfce::default_config {
   file { '/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml':
     source => 'puppet:///files/xfce/config/xfce4-panel.xml'
   }
+}
+
+class xfce::screenshooter {
+  package { 'xfce4-screenshooter': }
 }
 
 class xfce::thunar {
