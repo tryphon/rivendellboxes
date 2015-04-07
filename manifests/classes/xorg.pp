@@ -5,5 +5,8 @@ class xorg {
   file { "/etc/modprobe.d/gma500_gfx.conf":
     content => "blacklist gma500_gfx\n"
   }
-  
+
+  package { ['xscreensaver', 'xscreensaver-data']:
+    ensure => absent,
+  }
 }
