@@ -13,3 +13,7 @@ fi
 
 # Remove .rdairplaylock lock (#649)
 pgrep rdairplay > /dev/null || rm -f ~/.rdairplaylock
+
+# Disable DPMS
+xset s off
+xset -dpms
