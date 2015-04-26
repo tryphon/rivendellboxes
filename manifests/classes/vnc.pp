@@ -32,3 +32,7 @@ class vnc::server {
     source => "puppet:///files/x11vnc/steto.rb"
   }
 }
+
+class vnc::client {
+  package { 'xvnc4viewer': }
+}

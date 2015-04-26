@@ -12,6 +12,7 @@ class rivendell::station {
 
   include xfce
   include vnc::server
+  include vnc::client
   include xorg
 
   include alsa::hdsp
