@@ -10,7 +10,7 @@ exec 2> >(logger -t "$LOG_TOPIC_ERR" )
 SERVICE="Production"
 DAY=0
 
-while getopts "sdg" option; do
+while getopts "s:d:g" option; do
     case $option in
         g)
         # ignore -g option .. we always generate log
