@@ -1,5 +1,5 @@
 #!/bin/sh
-if grep -q "Hammerfall DSP" /proc/asound/cards; then
+if egrep -q "Hammerfall DSP|HDSPMx" /proc/asound/cards; then
     echo "HDSP detected, hdspmixer starts"
     hdspmixer $@
 else
